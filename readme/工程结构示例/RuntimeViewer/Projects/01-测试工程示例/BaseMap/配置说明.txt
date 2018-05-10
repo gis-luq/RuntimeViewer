@@ -1,0 +1,19 @@
+支持数据类型
+1、tpk - LocalTiledPackage
+2、server切片 - LocalServerCache
+3、tiff - LocalGeoTIFF
+4、在线切片服务 - OnlineTiledMapServiceLayer
+5、在线动态图层 - OnlineDynamicMapServiceLayer
+6、vtpk-LocalVectorTilePackage
+
+
+示例：
+
+{
+"name": "彩色中文含兴趣点版中国基础地图",    //名称
+"type": "OnlineTiledMapServiceLayer",  //数据类型
+"path": "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetCold/MapServer", //在线服务为URL，本地文件为文件名，如：aa.tpk，不包括路径信息。
+"layerIndex": 0, 图层序号
+"visable": true, //是否显示
+"opacity": 1 //透明度
+},

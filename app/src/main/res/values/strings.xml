@@ -1,0 +1,23 @@
+<resources>
+
+    <string name="app_name">RuntimeViewer</string>
+    <string name="app_title_name_mian">通用应用程序框架</string>
+    <string name="app_title_name_subhead">基于ArcGIS Runtime SDK 100.2.1</string>
+    <string name="app_company">Copyright © gis-luq</string>
+
+    <!--解锁信息-->
+    <string name="loginRemark">请输入解锁密码</string>
+    <string name="permission">权限(permission)</string>
+    <string name="no_permissions">应用需要必要的运行权限</string>
+
+    <!--权限配置-->
+    <string name="settings">设置</string>
+    <string name="help">帮助</string>
+    <string name="string_help_text">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。\n\n最后点击两次后退按钮，即可返回。</string>
+    <string name="quit">退出</string>
+
+    <!--地图窗口-->
+    <string name="txt_location_info">(开启GPS) 坐标信息</string>
+
+
+</resources>

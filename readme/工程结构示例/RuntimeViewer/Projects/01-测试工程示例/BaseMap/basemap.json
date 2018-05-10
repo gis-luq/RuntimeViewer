@@ -1,0 +1,28 @@
+{
+    "baselayers": [
+		{
+            "name": "离线vtpk",
+            "type": "LocalVectorTilePackage",
+            "path": "china.vtpk",
+            "layerIndex": 1,
+            "visable": true,
+            "opacity": 1
+        },
+		{
+            "name": "彩色中文含兴趣点版中国基础地图",
+            "type": "OnlineTiledMapServiceLayer",
+            "path": "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer",
+            "layerIndex": 2,
+            "visable": true,
+            "opacity": 1
+        },
+		{
+            "name": "午夜蓝色中文不含兴趣点版中国基础地图",
+            "type": "OnlineTiledMapServiceLayer",
+            "path": "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer",
+            "layerIndex": 3,
+            "visable": false,
+            "opacity": 1
+        }
+    ]
+}
