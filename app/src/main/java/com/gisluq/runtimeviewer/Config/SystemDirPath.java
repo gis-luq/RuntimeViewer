@@ -18,7 +18,6 @@ public class SystemDirPath {
 
     private static String SystemConf = "/System"; //系统模板
     private static String lockViewConf = "/lockscreen.conf"; //锁屏配置文件信息
-//    private static String licenseCode = "/license.applic";//许可配置文件
 
     public static String SDPath = SDCardUtils.getSDCardPath();//系统SD卡路径
 

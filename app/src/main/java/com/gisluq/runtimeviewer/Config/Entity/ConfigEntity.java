@@ -13,8 +13,6 @@
 package com.gisluq.runtimeviewer.Config.Entity;
 
 
-import com.gisluq.runtimeviewer.BMOD.MapModule.Common.CommTools;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +23,6 @@ public class ConfigEntity
 {
 	private String runtimrKey = null;//许可信息
 	private String workspacePath = null;//工作空间路径
-
-	private double[] extentArray = null;
 
 	private List<WidgetEntity> mListWidget = new ArrayList<WidgetEntity>();
 
@@ -44,15 +40,6 @@ public class ConfigEntity
 
 	public void setWorkspacePath(String workspacePath) {
 		this.workspacePath = workspacePath;
-	}
-
-	public void setMapExtent(String extent)
-	{
-		extentArray = CommTools.getExtent(extent);
-	}
-	public double[] getMapExtend()
-	{
-		return extentArray;
 	}
 
 	public void setListWidget(List<WidgetEntity> list)

@@ -4,7 +4,6 @@ package com.gisluq.runtimeviewer.EventBus;
  * 消息事件
  * Created by luq on 2017/5/14.
  */
-
 public class MessageEvent {
     private String message;
 

@@ -250,12 +250,6 @@ public class MapActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
-//        switch(item.getItemId())//得到被点击的item的itemId
-//        {
-//            case Menu.FIRST+2: //对应的ID就是在add方法中所设定的Id
-//                ToastUtils.showShort(context,"功能模块1");
-//                break;
-//        }
         Object object =  mWidgetEntityMenu.get(item.getItemId());
         if (object!=null){
             if (object.getClass().equals(WidgetEntity.class)){
@@ -272,14 +266,11 @@ public class MapActivity extends BaseActivity {
                     for (int i=0;i<list.size();i++){
                         WidgetEntity entity = list.get(i);
                         pmp.getMenu().add(entity.getLabel());
-                        //记录菜单ID和WidgetEntity间对应关系
-//                        mWidgetEntityChildMenu.put(menuChileItem.getItemId(),entity);
                     }
                     pmp.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             //子菜单点击事件
-
                             for (int i=0;i<list.size();i++){
                                 WidgetEntity entity = list.get(i);
                                 if (entity.getLabel().equals(item.getTitle())){

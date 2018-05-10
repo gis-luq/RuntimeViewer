@@ -6,9 +6,7 @@ import android.content.DialogInterface;
 
 /**
  * 弹窗工具组件
- * Created by luq on 2017/4/29.
  */
-
 public class DialogTools {
 
     /**

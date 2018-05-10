@@ -17,7 +17,6 @@ import android.content.Context;
 
 import com.gisluq.runtimeviewer.BMOD.MapModule.Resource.Constant;
 import com.gisluq.runtimeviewer.Config.Entity.ConfigEntity;
-import com.gisluq.runtimeviewer.Config.Entity.LayerEntity;
 import com.gisluq.runtimeviewer.Config.Entity.WidgetEntity;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -31,20 +30,6 @@ import java.util.List;
  * 系统配置文件解析工具
  */
 public class XmlParser {
-
-//	private final static String XML_NODE_MAP = "map";
-//	private final static String XML_NODE_MAP_ATTRIBUTE_EXTENT = "initialextent";
-//
-//	private final static String XML_NODE_MAP_BASEMAP = "basemaps";
-//	private final static String XML_NODE_MAP_OPERATIONAL_LAYER = "operationallayers";
-//
-//	private final static String XML_NODE_MAP_LAYER = "layer";
-//	private final static String XML_NODE_MAP_LAYER_ATTRIBUTE_LABEL = "label";
-//	private final static String XML_NODE_MAP_LAYER_ATTRIBUTE_TYPE = "type";
-//	private final static String XML_NODE_MAP_LAYER_ATTRIBUTE_URL = "url";
-//	private final static String XML_NODE_MAP_LAYER_ATTRIBUTE_ICON = "icon";
-//	private final static String XML_NODE_MAP_LAYER_ATTRIBUTE_VISIBLE = "visible";
-//	private final static String XML_NODE_MAP_LAYER_ATTRIBUTE_ALPHA = "alpha";
 
 	private final static String XML_NODE_RUNTIMEKEY = "runtimekey";
 	private final static String XML_NODE_RUNTIMEKEY_LICENSE = "license";
@@ -129,7 +114,6 @@ public class XmlParser {
 							if (pullParser.getAttributeValue(null,XML_NODE_WIDGET_ATTRIBUTE_GROUP) != null){
 								entity.setGroup(pullParser.getAttributeValue(null,XML_NODE_WIDGET_ATTRIBUTE_GROUP));
 							}
-							entity.setProperty(isWidgetContainer?WidgetEntity.EnumProperty.WidgetContainer:WidgetEntity.EnumProperty.Menus);
 							if(mListWidget != null) mListWidget.add(entity);
 						}else if (XML_NODE_MENUS.equals(nodeName)) {
 							if(mListWidget == null) mListWidget = new ArrayList<>();

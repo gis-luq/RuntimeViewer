@@ -22,7 +22,7 @@ import gisluq.lib.Util.ToastUtils;
 
 /**
  * 地图组件管理类
- * Created by luq on 2017/4/8.
+ * Created by gis-luq on 2018/4/10.
  */
 
 public class MapManager {
@@ -128,13 +128,6 @@ public class MapManager {
                 }
             }
         });
-
-    }
-
-    /**
-     * 初始化底图信息
-     */
-    public void loadMap() {
 
     }
 

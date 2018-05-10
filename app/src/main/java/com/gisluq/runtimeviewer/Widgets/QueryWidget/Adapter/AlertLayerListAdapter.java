@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutionException;
 
 /**
  *  要素选择弹框
- * Created by luq on 2017/5/5.
+ * Created by gis-luq on 2017/5/5.
  */
 
 public class AlertLayerListAdapter extends BaseAdapter {

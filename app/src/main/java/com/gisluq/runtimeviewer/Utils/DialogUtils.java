@@ -5,9 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 /**
- * Created by luq on 2017/3/11.
+ * 系统弹窗
  */
-
 public class DialogUtils {
 
     /**

@@ -23,7 +23,7 @@ import gisluq.lib.Util.ToastUtils;
 
 /**
  * 自定义用户弹窗组件
- * Created by lq on 2015/11/24.
+ * Created by gis-luq on 2015/11/24.
  */
 public class VoiceAlertView {
 

@@ -15,7 +15,6 @@ import java.util.List;
 
 /**
  * 文件夹操作类
- * Created by lq on 2015/3/23.
  */
 public class FileUtils {
 

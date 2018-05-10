@@ -21,7 +21,7 @@ import gisluq.lib.Util.ToastUtils;
 
 /**
  * 应用程序组件管理器
- * Created by luq on 2017/4/8.
+ * Created by gis-luq on 2018/4/10.
  */
 
 public class WidgetManager {

@@ -12,9 +12,8 @@ import java.util.zip.CheckedOutputStream;
 
 /**
  * 要素绘制工具UI信息
- * Created by luq on 2018/4/20.
+ * Created by gis-luq on 2018/4/20.
  */
-
 public class DrawToolsResource {
 
     private Context context;

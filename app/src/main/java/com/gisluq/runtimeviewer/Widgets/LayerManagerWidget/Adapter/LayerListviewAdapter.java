@@ -21,9 +21,8 @@ import java.util.List;
 
 /**
  * 图表列表
- * Created by luq on 2017/5/5.
+ * Created by gis-luq on 2018/4/25.
  */
-
 public class LayerListviewAdapter extends BaseAdapter {
 
     public class AdapterHolder{//列表绑定项

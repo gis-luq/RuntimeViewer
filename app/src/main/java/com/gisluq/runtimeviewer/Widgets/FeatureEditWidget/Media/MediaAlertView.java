@@ -34,7 +34,7 @@ import gisluq.lib.Util.ToastUtils;
 
 /**
  * 多媒体
- * Created by lq on 2015/11/24.
+ * Created by gis-luq on 2015/11/24.
  */
 public class MediaAlertView {
 

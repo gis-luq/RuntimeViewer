@@ -2,7 +2,7 @@ package com.gisluq.runtimeviewer.Widgets.LayerManagerWidget.BaseMap;
 
 /**
  * 图层信息列表
- * Created by lq on 2015/4/2.
+ * Created by gis-luq on 2015/4/2.
  */
 public class BasemapLayerInfo {
 

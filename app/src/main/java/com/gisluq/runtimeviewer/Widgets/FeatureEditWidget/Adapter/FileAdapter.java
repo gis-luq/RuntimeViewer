@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * 文件列表
- * Created by luq on 2017/5/5.
+ * Created by gis-luq on 2017/5/5.
  */
 
 public class FileAdapter extends BaseAdapter {

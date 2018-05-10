@@ -30,9 +30,8 @@ import gisluq.lib.Util.ToastUtils;
 
 /**
  * 属性查图点击事件
- * Created by luq on 2018/4/19.
+ * Created by gis-luq on 2018/4/19.
  */
-
 public class MapQueryOnTouchListener extends DefaultMapViewOnTouchListener{
 
     private Context context;

@@ -4,7 +4,7 @@ package com.gisluq.runtimeviewer.Utils;
 import java.text.SimpleDateFormat;
 
 /**
- * Created by fan on 2016/6/23.
+ * 时间处理工具
  */
 public class TimeUtils {
 

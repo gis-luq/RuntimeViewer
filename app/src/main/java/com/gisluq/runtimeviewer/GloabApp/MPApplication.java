@@ -6,9 +6,7 @@ import android.os.StrictMode;
 
 /**
  * 主Application
- * Created by luq on 2017/4/8.
  */
-
 public class MPApplication extends Application {
 
     @Override

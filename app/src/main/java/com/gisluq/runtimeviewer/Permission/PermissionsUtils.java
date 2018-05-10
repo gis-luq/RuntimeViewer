@@ -6,9 +6,7 @@ import android.content.Context;
 
 /**
  * 用户权限管理类
- * Created by luq on 2017/4/30.
  */
-
 public class PermissionsUtils {
 
     private static final int REQUEST_CODE = 0; // 请求码

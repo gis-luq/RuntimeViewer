@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * 要素查询结果
- * Created by luq on 2017/5/5.
+ * Created by gis-luq on 2017/5/5.
  */
 
 public class QueryResultAdapter extends BaseAdapter {

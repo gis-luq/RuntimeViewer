@@ -15,9 +15,7 @@ import com.gisluq.runtimeviewer.R;
 
 /**
  * 资源绑定注册类
- * Created by luq on 2017/4/8.
  */
-
 public class ResourceConfig {
 
     public Context context;

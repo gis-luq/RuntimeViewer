@@ -31,7 +31,7 @@ import java.text.DecimalFormat;
 
 /**
  * 用户扩展位置显示类
- * Created by luq on 2017/3/11.
+ * Created by gis-luq on 2018/4/10.
  */
 public class DMUserLocationManager {
 
@@ -188,28 +188,5 @@ public class DMUserLocationManager {
 
         }
     };
-
-
-    public void setLocationListener(LocationListener locationListener) {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            DialogUtils.showDialog(context,"请检查定位权限问题");
-            return;
-        }
-        loctionManager.requestLocationUpdates(provider, 2 * 1000, 0, locationListener);
-    }
-
-    public void setLocationListenerDefault() {
-        try {
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                DialogUtils.showDialog(context,"请检查定位权限问题");
-                return;
-            }
-            loctionManager.requestLocationUpdates(provider, 2 * 1000, 0, mListener);
-        }catch (Exception e){
-//            Log.e(TAG,e.getMessage());
-        }
-    }
 
 }

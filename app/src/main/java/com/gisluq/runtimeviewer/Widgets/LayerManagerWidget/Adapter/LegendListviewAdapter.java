@@ -30,9 +30,8 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * 图例
- * Created by luq on 2017/5/5.
+ * Created by gis-luq on 2018/4/25.
  */
-
 public class LegendListviewAdapter extends BaseAdapter {
 
     public class AdapterHolder{//列表绑定项

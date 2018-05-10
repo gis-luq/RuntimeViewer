@@ -1,7 +1,8 @@
 package com.gisluq.runtimeviewer.Widgets.QueryWidget.Bean;
 
 /**
- * Created by luq on 2018/2/24.
+ * 属性
+ * Created by gis-luq on 2018/2/24.
  */
 
 public class KeyAndValueBean {

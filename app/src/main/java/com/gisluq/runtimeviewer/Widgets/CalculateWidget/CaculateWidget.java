@@ -26,7 +26,7 @@ import gisluq.lib.Util.ToastUtils;
 
 /**
  * 测量组件
- * Created by gis-luq on 2018/3/10.
+ * Created by gis-luq on 2018/4/25.
  */
 public class CaculateWidget extends BaseWidget {
 

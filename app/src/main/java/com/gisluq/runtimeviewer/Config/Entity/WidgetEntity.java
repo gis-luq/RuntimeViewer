@@ -12,8 +12,9 @@
 
 package com.gisluq.runtimeviewer.Config.Entity;
 
-import android.graphics.Bitmap;
-
+/**
+ * Widget组件信息
+ */
 public class WidgetEntity 
 {
 	private int mId = 0;
@@ -23,9 +24,6 @@ public class WidgetEntity
 	private String mIcon = "";
 	private String mConfig = "";
 	private boolean isShowing = false;
-//	private Bitmap mImage = null;
-	public enum EnumProperty { Menus, WidgetContainer }
-	private EnumProperty mProperty = EnumProperty.WidgetContainer;
 
 	public void setGroup(String group){
 		this.mGroup = group;
@@ -33,13 +31,7 @@ public class WidgetEntity
 	public String getGroup(){
 		return mGroup;
 	}
-	
-//	public Bitmap getIcon() {
-//		return mImage;
-//	}
-//	public void setIcon(Bitmap bm) {
-//		this.mImage = bm;
-//	}
+
 	public boolean getIsShowing() {
 		return isShowing;
 	}
@@ -86,13 +78,5 @@ public class WidgetEntity
 	public String getLabel()
 	{
 		return mLabel;
-	}
-	public void setProperty(EnumProperty property)
-	{
-		mProperty = property;
-	}
-	public EnumProperty getProperty()
-	{
-		return mProperty;
 	}
 }

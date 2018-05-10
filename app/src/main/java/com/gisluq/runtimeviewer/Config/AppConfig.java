@@ -7,7 +7,6 @@ import com.gisluq.runtimeviewer.Config.Xml.XmlParser;
 
 /**
  * 系统配置获取
- * Created by luq on 2018/3/28.
  */
 public class AppConfig {
 

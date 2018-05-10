@@ -33,6 +33,7 @@ import com.gisluq.runtimeviewer.R;
 
 /**
  * 地图旋转控制组件，当地图旋转时显示
+ * Created by gis-luq on 2018/4/10.
  */
 public class Compass extends View {
 

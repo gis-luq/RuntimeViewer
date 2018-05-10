@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * 底图图层加载管理类
- * Created by luq on 2017/6/11.
+ * Created by gis-luq on 2017/6/11.
  */
 
 public class BaseMapManager {

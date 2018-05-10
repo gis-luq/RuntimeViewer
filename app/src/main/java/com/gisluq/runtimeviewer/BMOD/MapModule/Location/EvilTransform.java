@@ -1,5 +1,9 @@
 package com.gisluq.runtimeviewer.BMOD.MapModule.Location;
 
+/**
+ * 坐标转换接口
+ * Created by gis-luq on 2018/4/10.
+ */
 public class EvilTransform {
 
 	private static double pi = 3.14159265358979324;

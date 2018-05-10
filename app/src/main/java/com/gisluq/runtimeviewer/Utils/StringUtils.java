@@ -4,9 +4,7 @@ import java.util.regex.Pattern;
 
 /**
  * 字符串处理工具
- * Created by luq on 2018/3/28.
  */
-
 public class StringUtils {
 
     /**

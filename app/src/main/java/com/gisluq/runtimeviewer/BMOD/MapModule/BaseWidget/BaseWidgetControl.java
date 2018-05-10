@@ -16,7 +16,7 @@ import com.gisluq.runtimeviewer.R;
 /**
  * 应用程序组件基类
  * 负责和UI交互
- * Created by luq on 2017/4/8.
+ * Created by gis-luq on 2018/4/10.
  */
 
 public class BaseWidgetControl {

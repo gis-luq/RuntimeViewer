@@ -2,9 +2,7 @@ package com.gisluq.runtimeviewer.EventBus;
 
 /**
  * Widget系统消息事件
- * Created by luq on 2017/5/14.
  */
-
 public class BaseWidgetMsgEvent {
     private String message;
 

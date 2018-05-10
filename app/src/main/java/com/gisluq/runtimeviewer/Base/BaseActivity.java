@@ -10,6 +10,7 @@ import com.gisluq.runtimeviewer.Common.ToolBarHelper;
 /**
  * Activity基类
  * 用于控制状态栏显示内容
+ * Created by gis-luq on 2018/4/10.
  */
 public class BaseActivity extends AppCompatActivity {
 

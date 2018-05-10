@@ -31,9 +31,8 @@ import gisluq.lib.Util.ToastUtils;
 
 /**
  * 要素选择事件
- * Created by luq on 2018/4/23.
+ * Created by gis-luq on 2018/4/23.
  */
-
 public class MapSelectOnTouchListener extends DefaultMapViewOnTouchListener {
 
     private Context context;
