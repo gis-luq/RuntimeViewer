@@ -1,5 +1,6 @@
 package com.gisluq.runtimeviewer.BMOD.RootAct;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,8 +12,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.gisluq.runtimeviewer.BMOD.SystemModule.LoginActivity;
+import com.gisluq.runtimeviewer.BMOD.ProjectsModule.View.MainActivity;
 import com.gisluq.runtimeviewer.Config.AppWorksSpaceInit;
+import com.gisluq.runtimeviewer.Permission.PermissionsActivity;
+import com.gisluq.runtimeviewer.Permission.PermissionsChecker;
 import com.gisluq.runtimeviewer.R;
 
 import gisluq.lib.Util.AppUtils;
@@ -28,11 +31,33 @@ public class InitActivity extends AppCompatActivity {
     private final int SPLASH_DISPLAY_LENGHT = 2000; // 延迟时间
     private Context context = null;
 
+    private static final int REQUEST_CODE = 0; // 请求码
+    // 所需的全部权限
+    private static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,//写入存储
+            Manifest.permission.ACCESS_FINE_LOCATION,//位置信息
+            Manifest.permission.ACCESS_WIFI_STATE,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.CAMERA //相机
+    };
+    private static PermissionsChecker mPermissionsChecker; // 权限检测器
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
         setContentView(R.layout.activity_init);
+
+        mPermissionsChecker = new PermissionsChecker(this);
+        // 缺少权限时, 进入权限配置页面
+        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+            startPermissionsActivity();
+        }else {
+            appInit();
+        }
+
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 try {
@@ -54,7 +79,7 @@ public class InitActivity extends AppCompatActivity {
                         builder.setNegativeButton("确认", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-//                                startActivity();
+                                startActivity();
                                 dialog.dismiss();
                                 ToastUtils.showShort(context,"应用程序打开失败，请使用平台后再试");
                             }
@@ -65,12 +90,7 @@ public class InitActivity extends AppCompatActivity {
                 }catch (Exception e){
                     Log.e(TAG,e.toString());
                 }
-
-                startActivity();
-
-
             }
-
         }, SPLASH_DISPLAY_LENGHT);
 
         TextView textView = (TextView)this.findViewById(R.id.activity_init_versionTxt);
@@ -79,13 +99,27 @@ public class InitActivity extends AppCompatActivity {
     }
 
     /**
-     * 跳转到登录页
+     * 跳转
      */
     private void startActivity() {
-        Intent loginIntent = new Intent(context,
-                LoginActivity.class);
-        context.startActivity(loginIntent);
+        Intent mainIntent = new Intent(context,MainActivity.class);
+        context.startActivity(mainIntent);
         ((Activity)context).finish();
     }
+
+    /**
+     *  应用程序初始化
+     */
+    private void appInit() {
+        boolean isOk = AppWorksSpaceInit.init(context);//初始化系统文件夹路径
+    }
+
+    /**
+     * 弹出权限获取提示信息
+     */
+    private void startPermissionsActivity() {
+        PermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
+    }
+
 
 }

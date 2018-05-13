@@ -50,7 +50,6 @@ public class LoginActivity extends BaseActivity implements LockPatternView.OnPat
 
         setContentView(R.layout.activity_login);
 
-
         this.lock_pattern = (LockPatternView) this.findViewById(R.id.activity_login_lock_pattern);
         this.lock_pattern.setOnPatternListener(this);
 
@@ -182,7 +181,7 @@ public class LoginActivity extends BaseActivity implements LockPatternView.OnPat
                 return;
             }
             if (lockviewMd.equals(lockStr)) {
-                Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent mainIntent = new Intent(context, MainActivity.class);
                 context.startActivity(mainIntent);
                 this.finish();
             } else {

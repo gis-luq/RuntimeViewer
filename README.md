@@ -9,8 +9,14 @@
 #### 手机模式
 <div align=center><img width="400" src="./readme/20180330235309.png"/></div>
 
-使用说明
-=================
+如何快速运行应用程序？
+===========
+* 使用git工具下来工程并将工程导入Android Studio
+* 拷贝工程目录下/readme/工程结构示例/RuntimeViewer到手机存储根目录下（因为示例程序数据源均为离线）
+* 运行应用程序
+
+框架使用说明
+======
 ![ ](./readme/20180328105641.png '描述')
 
 项目采用插件化结构设计，文件夹架构说明如下
@@ -214,4 +220,69 @@ public void onDataSynEvent(DataSynEvent event) {
 更多内容请参考EventBus 3.0详细相关材料：https://www.cnblogs.com/whoislcj/p/5595714.html
 
 
+Widget示例
+========
+### 图层管理 LayerManagerWidget
+实现功能包括：基础底图数据加载、业务图层加载（目前仅支持Shapefile），图层开启关闭、透明度控制、图例等。
 
+![ ](./readme/widgets/layer.png '图层管理')
+
+![ ](./readme/widgets/legend.png '图例')
+
+#### 底图数据支持数据类型
+* tpk - LocalTiledPackage
+* server切片 - LocalServerCache
+* tiff - LocalGeoTIFF
+* 在线切片服务 - OnlineTiledMapServiceLayer
+* 在线动态图层 - OnlineDynamicMapServiceLayer
+* vtpk-LocalVectorTilePackage
+
+##### 底图数据通过加载basemap.json实现，系统根目录/RuntimeViewer/XXX工程/BaseMap/basemap.json
+文件内容如下，相关底图离线文件放在basemap.json所在文件夹即可。
+```
+{
+    "baselayers": [
+		{
+            "name": "离线vtpk",
+            "type": "LocalVectorTilePackage",
+            "path": "china.vtpk",
+            "layerIndex": 1,
+            "visable": true,
+            "opacity": 1
+        },
+		{
+            "name": "彩色中文含兴趣点版中国基础地图",
+            "type": "OnlineTiledMapServiceLayer",
+            "path": "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer",
+            "layerIndex": 2,
+            "visable": true,
+            "opacity": 1
+        },
+		{
+            "name": "午夜蓝色中文不含兴趣点版中国基础地图",
+            "type": "OnlineTiledMapServiceLayer",
+            "path": "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer",
+            "layerIndex": 3,
+            "visable": false,
+            "opacity": 1
+        }
+    ]
+}
+```
+
+### 要素查询 QueryWidget
+实现功能包括：图查属性、属性查图
+
+![ ](./readme/widgets/identify.png '图查属性')
+
+![ ](./readme/widgets/query.png '属性查图')
+
+### 要素编辑 FeatureEditWidget
+实现功能包括：基于shapefile实现点、线、面要素添加，属性编辑，多媒体附件挂接（照片、视频、录音）
+
+![ ](./readme/widgets/edit.png '要素编辑')
+
+### 测量量算 CalculateWidget
+实现功能包括：坐标获取、长度计算、面积计算
+
+![ ](./readme/widgets/caculate.png '图查属性')

@@ -1,12 +1,19 @@
 package com.gisluq.runtimeviewer.BMOD.ProjectsModule.View;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.SystemClock;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
@@ -19,6 +26,7 @@ import com.gisluq.runtimeviewer.BMOD.SystemModule.AboutActivity;
 import com.gisluq.runtimeviewer.BMOD.SystemModule.LockviewActivity;
 import com.gisluq.runtimeviewer.Base.BaseActivity;
 import com.gisluq.runtimeviewer.Config.SystemDirPath;
+import com.gisluq.runtimeviewer.Permission.PermissionsChecker;
 import com.gisluq.runtimeviewer.R;
 import com.gisluq.runtimeviewer.Utils.FileUtils;
 
@@ -118,7 +126,7 @@ public class MainActivity extends BaseActivity {
         MenuItem reItem= menu.add(Menu.NONE, Menu.FIRST + 1, 0, "刷新");
         reItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);//显示到状态栏
 
-        MenuItem menuItemSetting= menu.add(Menu.NONE, Menu.FIRST + 2, 0, "锁屏设置");
+//        MenuItem menuItemSetting= menu.add(Menu.NONE, Menu.FIRST + 2, 0, "锁屏设置");
         MenuItem menuItemAbout= menu.add(Menu.NONE, Menu.FIRST + 3, 0, "关于");
 
         return true;
@@ -133,10 +141,10 @@ public class MainActivity extends BaseActivity {
                 RefreshTask refreshTask =new RefreshTask(context);
                 refreshTask.execute();
                 break;
-            case Menu.FIRST+2: //对应的ID就是在add方法中所设定的Id
-                Intent lockIntent = new Intent(context, LockviewActivity.class);
-                context.startActivity(lockIntent);
-                break;
+//            case Menu.FIRST+2: //对应的ID就是在add方法中所设定的Id
+//                Intent lockIntent = new Intent(context, LockviewActivity.class);
+//                context.startActivity(lockIntent);
+//                break;
             case Menu.FIRST+3: //对应的ID就是在add方法中所设定的Id
                 Intent aboutIntent = new Intent(context, AboutActivity.class);
                 context.startActivity(aboutIntent);
@@ -146,9 +154,41 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exitActivity();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 退出系统
+     */
+    private void exitActivity() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("是否退出应用程序？");
+        builder.setTitle("系统提示");
+        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ((Activity)context).finish();
+            }
+        });
+        builder.create().show();
+
+    }
+
     /**
      * 刷新项目
      */
+    @TargetApi(Build.VERSION_CODES.CUPCAKE)
     public class RefreshTask extends AsyncTask<Integer, Integer, Boolean> {
 
         private Context context;

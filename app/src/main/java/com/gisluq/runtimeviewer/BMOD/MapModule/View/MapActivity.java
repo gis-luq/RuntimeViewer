@@ -293,8 +293,6 @@ public class MapActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             //截屏保存
-
-            exitActivity();
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -304,27 +302,6 @@ public class MapActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    /**
-     * 退出系统
-     */
-    private void exitActivity() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("是否退出应用程序？");
-        builder.setTitle("系统提示");
-        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.setNegativeButton("确认", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
-        builder.create().show();
 
-    }
 
 }

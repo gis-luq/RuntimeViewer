@@ -20,6 +20,6 @@ App配置文件
         <widget label="信息统计" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" config=""/>
 
         <!--<widget label="轨迹记录" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" config=""/>-->
-        <widget label="Hello World" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget2" config=""/>
+        <widget label="Hello World" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" config=""/>
     </widgetcontainer>
 </configuration>
