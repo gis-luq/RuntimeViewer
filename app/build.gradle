@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.gisluq.runtimeviewer"
-        minSdkVersion 24
-        targetSdkVersion 26
+        minSdkVersion 18
+        targetSdkVersion 27
         versionCode 1
         versionName "v-0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -16,7 +16,7 @@ android {
 //        }
 
         //Enabling multidex support.
-        multiDexEnabled true
+//        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -28,9 +28,9 @@ android {
 }
 
 dependencies {
-//    compile  fileTree(include: ['*.jar'], dir: 'libs')
-    compile  'com.android.support:appcompat-v7:25.0.1'
-    compile  'org.greenrobot:eventbus:3.0.0'
-    compile  project(':lib')
+    implementation  fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation  'org.greenrobot:eventbus:3.0.0'
+    implementation  project(':lib')
     implementation 'com.android.support:design:27.1.0'
 }

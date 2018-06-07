@@ -22,6 +22,10 @@ import com.esri.arcgisruntime.layers.FeatureLayer;
 import com.esri.arcgisruntime.layers.Layer;
 import com.esri.arcgisruntime.layers.RasterLayer;
 import com.esri.arcgisruntime.raster.Raster;
+import com.esri.arcgisruntime.data.GeoPackage;
+import com.esri.arcgisruntime.data.GeoPackageFeatureTable;
+
+
 import com.gisluq.runtimeviewer.BMOD.MapModule.BaseWidget.BaseWidget;
 import com.gisluq.runtimeviewer.R;
 import com.gisluq.runtimeviewer.Utils.FileUtils;
@@ -65,6 +69,8 @@ public class LayerManagerWidget extends BaseWidget {
 
         initBaseMapResource();//初始化底图
         initOperationalLayers();//初始化业务图层
+
+        initGeoPackageLayers();//初始化业务图层 gpkg
 
         initWidgetView();//初始化UI
 
@@ -219,7 +225,7 @@ public class LayerManagerWidget extends BaseWidget {
     }
 
     /**
-     * 初始化业务图层
+     * 初始化业务图层-shapefile
      */
     private void initOperationalLayers(){
         String path = getOperationalLayersPath();
@@ -237,6 +243,32 @@ public class LayerManagerWidget extends BaseWidget {
                     mapView.getMap().getOperationalLayers().add(mainShapefileLayer);
                 }
             });
+        }
+    }
+
+    /**
+     * 初始化GeoPackage图层
+     */
+    private void initGeoPackageLayers(){
+        String path = getGeoPackagePath();
+        List<FileUtils.FileInfo> fileInfos = FileUtils.getFileListInfo(path,"gpkg");
+        for (int i = 0; i < fileInfos.size(); i++) {
+            FileUtils.FileInfo fileInfo = fileInfos.get(i);
+            final GeoPackage geoPackage = new GeoPackage(fileInfo.FilePath);
+            geoPackage.loadAsync();
+            geoPackage.addDoneLoadingListener(new Runnable() {
+                 @Override
+                 public void run() {
+                     List<GeoPackageFeatureTable> packageFeatureTables = geoPackage.getGeoPackageFeatureTables();
+                     for (int j = 0; j < packageFeatureTables.size(); j++) {
+                         GeoPackageFeatureTable table = packageFeatureTables.get(j);
+                         FeatureLayer layer = new FeatureLayer(table);
+//                layer.setName(table.getName()+"-gpkg");
+                         mapView.getMap().getOperationalLayers().add(layer);
+                     }
+                 }
+            });
+
         }
     }
 
@@ -338,11 +370,19 @@ public class LayerManagerWidget extends BaseWidget {
     }
 
     /**
-     * 获取基础底图路径
+     * 获取业务图层路径
      * @return
      */
     private String getOperationalLayersPath(){
         return projectPath+ File.separator+"OperationalLayers"+File.separator;
+    }
+
+    /**
+     * 获取Geopackage路径
+     * @return
+     */
+    private String getGeoPackagePath(){
+        return projectPath+ File.separator+"GeoPackage"+File.separator;
     }
 
 }
