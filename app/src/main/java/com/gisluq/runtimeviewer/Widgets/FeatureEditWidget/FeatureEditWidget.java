@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ListView;
 
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
@@ -20,6 +19,7 @@ import com.esri.arcgisruntime.data.FeatureTable;
 import com.esri.arcgisruntime.geometry.Geometry;
 import com.esri.arcgisruntime.geometry.GeometryType;
 import com.esri.arcgisruntime.layers.FeatureLayer;
+import com.esri.arcgisruntime.mapping.LayerList;
 import com.esri.arcgisruntime.mapping.view.SketchCreationMode;
 import com.esri.arcgisruntime.mapping.view.SketchEditor;
 import com.esri.arcgisruntime.mapping.view.SketchStyle;
@@ -51,7 +51,7 @@ public class FeatureEditWidget extends BaseWidget {
     private SketchEditor mainSketchEditor;
     private SketchStyle mainSketchStyle;
 
-    private MapSelectOnTouchListener mapSelectOnTouchListener;//要素选择事件
+    private MapSelectOnTouchListener featureSelectOnTouchListener;//要素选择事件
     private View.OnTouchListener defauleOnTouchListener;//默认点击事件
 
     private boolean isSelect = false;
@@ -70,7 +70,7 @@ public class FeatureEditWidget extends BaseWidget {
 
         mapView.setSketchEditor(mainSketchEditor);
         mapView.setMagnifierEnabled(true);//放大镜
-        mapView.setOnTouchListener(mapSelectOnTouchListener);
+        mapView.setOnTouchListener(featureSelectOnTouchListener);
 
     }
 
@@ -101,12 +101,87 @@ public class FeatureEditWidget extends BaseWidget {
         initEditFeatureTools();//初始化要素编辑工具
     }
 
+
+    /**
+     * 初始化要素添加工具
+     * @param featureTempleteAdapter
+     */
+    private void initAddFeatureTools(final FeatureTempleteAdapter featureTempleteAdapter) {
+
+        drawToolsResource.getFeatureAddTools().txtBtnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainSketchEditor.stop();
+                drawToolsResource.getFeatureAddTools().txtSelectLayerName.setText("无");
+                drawToolsResource.getFeatureAddTools().toolsView.setVisibility(View.GONE);
+                mapView.setMagnifierEnabled(true);//放大镜
+            }
+        });
+
+        drawToolsResource.getFeatureAddTools().lnrBtnGoBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mainSketchEditor.canUndo()){
+                    mainSketchEditor.undo();
+                }else {
+                    ToastUtils.showShort(context,"当前状态已经无法回退了");
+                }
+            }
+        });
+
+        drawToolsResource.getFeatureAddTools().lnrBtnGoOn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mainSketchEditor.canRedo()){
+                    mainSketchEditor.redo();
+                }else{
+                    ToastUtils.showShort(context,"当前状态已经无法继续了");
+                }
+            }
+        });
+
+        drawToolsResource.getFeatureAddTools().lnrBtnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainSketchEditor.clearGeometry();
+            }
+        });
+
+        drawToolsResource.getFeatureAddTools().lnrBtnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FeatureLayer featureLayer = (FeatureLayer) featureTempleteAdapter.getSelectItem();
+                FeatureTable featureTable = featureLayer.getFeatureTable();
+                if (featureTable.canAdd()){
+                    Feature feature = featureTable.createFeature();
+                    Geometry geometry = mainSketchEditor.getGeometry();
+                    if (geometry!=null){
+                        feature.setGeometry(geometry);
+                        ListenableFuture<Void> addFeatureFuture = featureTable.addFeatureAsync(feature);//添加要素
+                        addFeatureFuture.addDoneListener(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtils.showShort(context,"要素添加成功");
+                                mainSketchEditor.clearGeometry();//允许多次添加，这里仅清空
+
+                            }
+                        });
+                    }else{
+                        ToastUtils.showShort(context,"请绘制图形后再试");
+                    }
+                }else {
+                    ToastUtils.showShort(context,"要素添加失败，图层："+featureLayer.getName()+"不支持编辑");
+                }
+            }
+        });
+    }
+
     /**
      * 初始化要素点击工具
      */
     private void initEditFeatureTools() {
 
-        mapSelectOnTouchListener = new MapSelectOnTouchListener(context,mapView,drawToolsResource);
+        featureSelectOnTouchListener = new MapSelectOnTouchListener(context,mapView,drawToolsResource);
 
         //退出
         drawToolsResource.getFeatureEditTools().txtBtnExit.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +191,7 @@ public class FeatureEditWidget extends BaseWidget {
                 drawToolsResource.getFeatureEditTools().txtSelectLayerName.setText("无");
                 drawToolsResource.getFeatureEditTools().toolsView.setVisibility(View.GONE);
 
-                mapSelectOnTouchListener.clear();//清空当前选择
+                featureSelectOnTouchListener.clear();//清空当前选择
 
                 drawToolsResource.gridViewFeatureTemplete.setEnabled(true);
             }
@@ -132,7 +207,7 @@ public class FeatureEditWidget extends BaseWidget {
         drawToolsResource.getFeatureEditTools().lnrBtnReDraw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FeatureLayer featureLayer = mapSelectOnTouchListener.getSelectFeatureLayer();
+                FeatureLayer featureLayer = featureSelectOnTouchListener.getSelectFeatureLayer();
                 GeometryType geometryType = featureLayer.getFeatureTable().getGeometryType();
                 switch (geometryType){
                     case POINT:
@@ -168,23 +243,27 @@ public class FeatureEditWidget extends BaseWidget {
         drawToolsResource.getFeatureEditTools().lnrBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FeatureLayer featureLayer = mapSelectOnTouchListener.getSelectFeatureLayer();
-                Feature feature = mapSelectOnTouchListener.getSelectFeature();
+                FeatureLayer featureLayer = featureSelectOnTouchListener.getSelectFeatureLayer();
+                Feature feature = featureSelectOnTouchListener.getSelectFeature();
 
                 FeatureTable featureTable = featureLayer.getFeatureTable();
                 if (featureTable.canUpdate(feature)){
                     Geometry geometry = mainSketchEditor.getGeometry();
                     if (geometry!=null){
                         feature.setGeometry(geometry);
+                        ListenableFuture<Void> updateFeatureAsync = featureTable.updateFeatureAsync(feature);//添加要素
+                        updateFeatureAsync.addDoneListener(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtils.showShort(context,"要素编辑成功");
+                                mainSketchEditor.clearGeometry();//允许多次添加，这里仅清空
+
+                            }
+                        });
+                    }else{
+                        ToastUtils.showShort(context,"请绘制图形后再试");
                     }
-                    ListenableFuture<Void> updateFeatureAsync = featureTable.updateFeatureAsync(feature);//添加要素
-                    updateFeatureAsync.addDoneListener(new Runnable() {
-                        @Override
-                        public void run() {
-                            ToastUtils.showShort(context,"要素编辑成功");
-                            mainSketchEditor.clearGeometry();//允许多次添加，这里仅清空
-                        }
-                    });
+
                 }else {
                     ToastUtils.showShort(context,"要素编辑失败，图层："+featureLayer.getName()+"不支持编辑");
                 }
@@ -195,7 +274,7 @@ public class FeatureEditWidget extends BaseWidget {
             @Override
             public void onClick(View v) {
 
-                Feature feature =mapSelectOnTouchListener.getSelectFeature();
+                Feature feature = featureSelectOnTouchListener.getSelectFeature();
 
                 final AlertDialog dialog = new AlertDialog.Builder(context).create();
                 View view = LayoutInflater.from(context).inflate( R.layout.widget_view_feature_edit_alert_attribute, null);
@@ -207,8 +286,8 @@ public class FeatureEditWidget extends BaseWidget {
                 btnOK.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        FeatureLayer featureLayer = mapSelectOnTouchListener.getSelectFeatureLayer();
-                        Feature feature = mapSelectOnTouchListener.getSelectFeature();
+                        FeatureLayer featureLayer = featureSelectOnTouchListener.getSelectFeatureLayer();
+                        Feature feature = featureSelectOnTouchListener.getSelectFeature();
                         FeatureTable featureTable = featureLayer.getFeatureTable();
 //                        feature.getAttributes().replace("NAME","test");//测试使用
                         if (featureTable.canUpdate(feature)){
@@ -270,7 +349,7 @@ public class FeatureEditWidget extends BaseWidget {
         drawToolsResource.getFeatureEditTools().lnrBtnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Feature feature = mapSelectOnTouchListener.getSelectFeature();
+                Feature feature = featureSelectOnTouchListener.getSelectFeature();
                 String fileName= feature.getFeatureTable().getTableName()+"_"+String.valueOf(feature.getAttributes().get("FID"))+"_"+ DateUtils.getTimeNow();
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 File out = new File(photoPath , fileName+".jpg");
@@ -283,7 +362,7 @@ public class FeatureEditWidget extends BaseWidget {
         drawToolsResource.getFeatureEditTools().lnrBtnVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Feature feature = mapSelectOnTouchListener.getSelectFeature();
+                Feature feature = featureSelectOnTouchListener.getSelectFeature();
                 String fileName= feature.getFeatureTable().getTableName()+"_"+String.valueOf(feature.getAttributes().get("FID"))+"_"+ DateUtils.getTimeNow();
                 //录视频前必须确认文件夹存在，否则写入异常
                 if (FileUtils.isExist(videoPath)==false){
@@ -300,7 +379,7 @@ public class FeatureEditWidget extends BaseWidget {
         drawToolsResource.getFeatureEditTools().lnrBtnVoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Feature feature = mapSelectOnTouchListener.getSelectFeature();
+                Feature feature = featureSelectOnTouchListener.getSelectFeature();
                 String name= feature.getFeatureTable().getTableName()+"_"+String.valueOf(feature.getAttributes().get("FID"))+"_"+ DateUtils.getTimeNow();
                 VoiceAlertView baseAlertView = new VoiceAlertView(context,audioPath,name);
                 baseAlertView.setTitle("录音");
@@ -334,8 +413,8 @@ public class FeatureEditWidget extends BaseWidget {
         builder.setNegativeButton("确认", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Feature feature = mapSelectOnTouchListener.getSelectFeature();
-                FeatureTable featureTable = mapSelectOnTouchListener.getSelectFeatureLayer().getFeatureTable();
+                Feature feature = featureSelectOnTouchListener.getSelectFeature();
+                FeatureTable featureTable = featureSelectOnTouchListener.getSelectFeatureLayer().getFeatureTable();
                 if (feature!=null){
                     if (featureTable.canDelete(feature)){
                         ListenableFuture<Void> deleteFeaturesAsync =  featureTable.deleteFeatureAsync(feature);
@@ -344,7 +423,7 @@ public class FeatureEditWidget extends BaseWidget {
                             public void run() {
                                 ToastUtils.showShort(context,"要素删除成功");
                                 drawToolsResource.getFeatureEditTools().toolsView.setVisibility(View.GONE);
-                                mapSelectOnTouchListener.clear();//清空当前选择
+                                featureSelectOnTouchListener.clear();//清空当前选择
                             }
                         });
                     }else {
@@ -361,73 +440,6 @@ public class FeatureEditWidget extends BaseWidget {
 
     }
 
-    /**
-     * 初始化要素添加工具
-     * @param featureTempleteAdapter
-     */
-    private void initAddFeatureTools(final FeatureTempleteAdapter featureTempleteAdapter) {
-
-        drawToolsResource.getFeatureAddTools().txtBtnExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainSketchEditor.stop();
-                drawToolsResource.getFeatureAddTools().txtSelectLayerName.setText("无");
-                drawToolsResource.getFeatureAddTools().toolsView.setVisibility(View.GONE);
-                mapView.setMagnifierEnabled(true);//放大镜
-            }
-        });
-
-        drawToolsResource.getFeatureAddTools().lnrBtnGoBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mainSketchEditor.canUndo()){
-                    mainSketchEditor.undo();
-                }else {
-                    ToastUtils.showShort(context,"当前状态已经无法回退了");
-                }
-            }
-        });
-
-        drawToolsResource.getFeatureAddTools().lnrBtnGoOn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mainSketchEditor.canRedo()){
-                    mainSketchEditor.redo();
-                }else{
-                    ToastUtils.showShort(context,"当前状态已经无法继续了");
-                }
-            }
-        });
-
-        drawToolsResource.getFeatureAddTools().lnrBtnClear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainSketchEditor.clearGeometry();
-            }
-        });
-
-        drawToolsResource.getFeatureAddTools().lnrBtnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FeatureLayer featureLayer = (FeatureLayer) featureTempleteAdapter.getSelectItem();
-                FeatureTable featureTable = featureLayer.getFeatureTable();
-                if (featureTable.canAdd()){
-                    Feature feature = featureTable.createFeature();
-                    feature.setGeometry(mainSketchEditor.getGeometry());
-                    ListenableFuture<Void> addFeatureFuture = featureTable.addFeatureAsync(feature);//添加要素
-                    addFeatureFuture.addDoneListener(new Runnable() {
-                        @Override
-                        public void run() {
-                            ToastUtils.showShort(context,"要素添加成功");
-                            mainSketchEditor.clearGeometry();//允许多次添加，这里仅清空
-                        }
-                    });
-                }else {
-                    ToastUtils.showShort(context,"要素添加失败，图层："+featureLayer.getName()+"不支持编辑");
-                }
-            }
-        });
-    }
 
     /**
      * 组件面板关闭时，执行的操作
@@ -448,7 +460,7 @@ public class FeatureEditWidget extends BaseWidget {
         if (defauleOnTouchListener!=null){
             super.mapView.setOnTouchListener(defauleOnTouchListener);//窗口关闭恢复默认点击状态
         }
-        mapSelectOnTouchListener.clear();//清空当前选择
+        featureSelectOnTouchListener.clear();//清空当前选择
         mapView.setMagnifierEnabled(false);//放大镜
 
         mapView.setSketchEditor(null);

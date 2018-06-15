@@ -6,8 +6,8 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.support.v7.app.AlertDialog;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
@@ -15,12 +15,11 @@ import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.layers.FeatureLayer;
 import com.esri.arcgisruntime.layers.Layer;
 import com.esri.arcgisruntime.mapping.GeoElement;
-import com.esri.arcgisruntime.mapping.view.DefaultMapViewOnTouchListener;
 import com.esri.arcgisruntime.mapping.view.IdentifyLayerResult;
 import com.esri.arcgisruntime.mapping.view.MapView;
+import com.esri.arcgisruntime.mapping.view.MapView.OnTouchListener;
 import com.gisluq.runtimeviewer.Widgets.FeatureEditWidget.Resource.DrawToolsResource;
 import com.gisluq.runtimeviewer.Widgets.QueryWidget.Adapter.AlertLayerListAdapter;
-import com.gisluq.runtimeviewer.Widgets.QueryWidget.Adapter.AttributeAdapter;
 import com.gisluq.runtimeviewer.Widgets.QueryWidget.Bean.KeyAndValueBean;
 
 import java.util.ArrayList;
@@ -31,38 +30,112 @@ import gisluq.lib.Util.ToastUtils;
 
 /**
  * 要素选择事件
- * Created by gis-luq on 2018/4/23.
+ * Created by gis-luq on 2018/6/7.
  */
-public class MapSelectOnTouchListener extends DefaultMapViewOnTouchListener {
+public class FeatureSelectOnTouchListener implements OnTouchListener {
 
     private Context context;
+    private MapView mapView;
     private DrawToolsResource drawToolsResource;
-    private boolean isOnLongpress=false;
 
     private Feature selectFeature;//当前选中要素信息
     private FeatureLayer selectFeatureLayer;//选中要素图层
 
-
-    public MapSelectOnTouchListener(Context context, MapView mapView, DrawToolsResource drawToolsResource) {
-        super(context, mapView);
+    public FeatureSelectOnTouchListener(Context context, MapView mapView, DrawToolsResource drawToolsResource) {
         this.context =context;
+        this.mapView = mapView;
         this.drawToolsResource =drawToolsResource;
     }
 
     @Override
-    public void onLongPress(MotionEvent e) {
-        isOnLongpress =true;
-        super.onLongPress(e);
+    public boolean onMultiPointerTap(MotionEvent motionEvent) {
+        return false;
     }
 
     @Override
-    public boolean onUp(MotionEvent e) {
-        if (isOnLongpress){
-            identifyMapLayers(e);
-        }
-        isOnLongpress=false;
-        return super.onUp(e);
+    public boolean onDoubleTouchDrag(MotionEvent motionEvent) {
+        return false;
     }
+
+    @Override
+    public boolean onUp(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onRotate(MotionEvent motionEvent, double v) {
+        return false;
+    }
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onDown(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent motionEvent) {
+        switch (motionEvent.getAction()){
+            case MotionEvent.ACTION_UP:
+                identifyMapLayers(motionEvent);
+                break;
+        }
+    }
+
+    @Override
+    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+    @Override
+    public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
+        return false;
+    }
+
+    @Override
+    public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
+        return false;
+    }
+
+    @Override
+    public void onScaleEnd(ScaleGestureDetector scaleGestureDetector) {
+
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        return true;
+    }
+
 
     /**
      * 获取当前选中要素
@@ -88,7 +161,7 @@ public class MapSelectOnTouchListener extends DefaultMapViewOnTouchListener {
         Point clickPoint = new Point(Math.round(e.getX()), Math.round(e.getY()));
         int tolerance = 5;
 
-        final ListenableFuture<List<IdentifyLayerResult>> identifyFuture = mMapView.identifyLayersAsync(clickPoint,tolerance,false);
+        final ListenableFuture<List<IdentifyLayerResult>> identifyFuture = mapView.identifyLayersAsync(clickPoint,tolerance,false);
         identifyFuture.addDoneListener(new Runnable() {
             @Override
             public void run() {
@@ -184,7 +257,7 @@ public class MapSelectOnTouchListener extends DefaultMapViewOnTouchListener {
             keyAndValueBeans.add(keyAndValueBean);
         }
 
-       //选中要素
+        //选中要素
         selectFeatureLayer = identifiedidLayer;
         selectFeature = feature;
 
@@ -194,7 +267,7 @@ public class MapSelectOnTouchListener extends DefaultMapViewOnTouchListener {
      * 清空所有要素选择
      */
     public void clearAllFeatureSelect(){
-        List<Layer> layers = mMapView.getMap().getOperationalLayers();
+        List<Layer> layers = mapView.getMap().getOperationalLayers();
         for (int i=0;i<layers.size();i++){
             FeatureLayer featureLayer = (FeatureLayer)layers.get(i);
             featureLayer.clearSelection();

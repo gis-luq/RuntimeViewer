@@ -62,31 +62,31 @@ public class InitActivity extends AppCompatActivity {
             public void run() {
                 try {
                     //判断是否为平板设备
-                    boolean ispad = SysUtils.isPad(context);
-                    if (ispad){
+//                    boolean ispad = SysUtils.isPad(context);
+//                    if (ispad){
                         startActivity();
-                    }else{
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setMessage("检测到当前设备并非平板，继续安装此应用程序将会出现异常，是否任然继续安装此应用程序？");
-                        builder.setTitle("系统提示");
-                        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                InitActivity.this.finish();
-                            }
-                        });
-                        builder.setNegativeButton("确认", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                startActivity();
-                                dialog.dismiss();
-                                ToastUtils.showShort(context,"应用程序打开失败，请使用平台后再试");
-                            }
-                        });
-                        builder.setCancelable(false);//点击外部不消失
-                        builder.create().show();
-                    }
+//                    }else{
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                        builder.setMessage("检测到当前设备并非平板，继续安装此应用程序将会出现异常，是否任然继续安装此应用程序？");
+//                        builder.setTitle("系统提示");
+//                        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                                InitActivity.this.finish();
+//                            }
+//                        });
+//                        builder.setNegativeButton("确认", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                startActivity();
+//                                dialog.dismiss();
+//                                ToastUtils.showShort(context,"应用程序打开失败，请使用平台后再试");
+//                            }
+//                        });
+//                        builder.setCancelable(false);//点击外部不消失
+//                        builder.create().show();
+//                    }
                 }catch (Exception e){
                     Log.e(TAG,e.toString());
                 }

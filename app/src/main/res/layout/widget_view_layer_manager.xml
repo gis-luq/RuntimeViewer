@@ -3,88 +3,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:orientation="horizontal"
-        android:padding="2dp">
-
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1">
 
-            android:layout_marginRight="1dp"
-            android:layout_weight="1"
-            android:background="@color/light_gray">
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/widget_view_layer_manager_txtBtnLayerList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/ic_item_touch_txtred"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="图层列表"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:padding="7dp"
-                    android:text="业务图层"
-                    android:textSize="12sp"
-                    android:textStyle="normal" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dip"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@color/colorPrimary" />
-
-                <ListView
-                    android:id="@+id/widget_view_layer_manager_featureLayerListview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
+            <View
+                android:id="@+id/widget_view_layer_manager_viewLayerList"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorPrimary" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="1dp"
-            android:layout_weight="1"
-            android:background="@color/light_gray">
+            android:layout_marginLeft="2dp"
+            android:layout_weight="1">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/widget_view_layer_manager_txtBtnLegend"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:background="@drawable/ic_item_touch_txtred"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="图例"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:padding="7dp"
-                    android:text="基础底图"
-                    android:textSize="12sp"
-                    android:textStyle="normal" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dip"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@color/colorPrimary" />
-
-                <ListView
-                    android:id="@+id/widget_view_layer_manager_basemapLayerListview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
+            <View
+                android:id="@+id/widget_view_layer_manager_viewLegend"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorPrimary"
+                android:visibility="gone" />
         </RelativeLayout>
-
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/widget_view_layer_manager_contentView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+
 </LinearLayout>

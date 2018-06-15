@@ -5,34 +5,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <View
-        android:id="@+id/view4"
-        android:layout_width="wrap_content"
-        android:layout_height="0.5dp"
-        android:alpha="0.6"
-        android:background="@color/grey" />
-
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_width="40dp"
+        android:layout_height="150dp"
         android:alpha="0.95"
-        android:background="@color/light_gray">
+        android:background="@color/colorPrimary"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:padding="1dp">
 
-        <HorizontalScrollView
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:scrollbars="none">
 
             <LinearLayout
                 android:id="@+id/base_widget_view_tools_linerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp">
+                android:orientation="vertical">
 
             </LinearLayout>
-        </HorizontalScrollView>
+        </ScrollView>
 
     </RelativeLayout>
 

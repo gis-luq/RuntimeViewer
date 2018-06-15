@@ -12,14 +12,13 @@ App配置文件
     <!--widget组件列表-->
     <widgetcontainer>
         <widget label="图层管理" classname="com.gisluq.runtimeviewer.Widgets.LayerManagerWidget.LayerManagerWidget" icon="widget_ico_layer_manager.png" config=""/>
-        <widget label="要素查询" classname="com.gisluq.runtimeviewer.Widgets.QueryWidget.QueryWidget" icon="widget_ico_query.png" config=""/>
-        <widget label="要素编辑" classname="com.gisluq.runtimeviewer.Widgets.FeatureEditWidget.FeatureEditWidget" icon="widget_ico_feature_edit.png" config=""/>
+        <!--<widget label="要素查询" classname="com.gisluq.runtimeviewer.Widgets.QueryWidget.QueryWidget" icon="widget_ico_query.png" config=""/>-->
+        <!--<widget label="要素编辑" classname="com.gisluq.runtimeviewer.Widgets.FeatureEditWidget.FeatureEditWidget" icon="widget_ico_feature_edit.png" config=""/>-->
         <widget label="测距量算" classname="com.gisluq.runtimeviewer.Widgets.CalculateWidget.CaculateWidget"  icon="widget_ico_caculate.png"  config=""/>
-        <!--<widget label="书签管理" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" config=""/>-->
-        <!--<widget label="草图截屏" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" config=""/>-->
-        <widget label="信息统计" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" config=""/>
-
-        <!--<widget label="轨迹记录" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" config=""/>-->
-        <widget label="Hello World" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" config=""/>
+        <widget label="测试" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" config=""/>
+        <widget label="测试" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" config=""/>
+        <widget label="测试" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" config=""/>
+        <widget label="测试" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" config=""/>
+        <widget label="测试" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" config=""/>
     </widgetcontainer>
 </configuration>

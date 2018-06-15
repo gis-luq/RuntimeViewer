@@ -15,9 +15,8 @@
             android:id="@+id/base_widget_view_btnOpen"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
             android:layout_margin="5dp"
             android:background="@drawable/ic_widget_up_btn" />
     </RelativeLayout>
@@ -52,13 +51,13 @@
                     android:layout_height="wrap_content"
                     android:alpha="0.9"
                     android:background="@color/colorPrimary"
-                    android:padding="5dp">
+                    android:padding="2dp">
 
                     <Button
                         android:id="@+id/base_widget_view_btnClosed"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
                         android:alpha="0.95"
                         android:background="@drawable/ic_widget_down_btn" />
 
@@ -72,7 +71,7 @@
                         android:gravity="center"
                         android:text="组件"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <Button
                         android:id="@+id/base_widget_view_btnRemove"
