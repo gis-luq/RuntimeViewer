@@ -394,6 +394,8 @@ public class FeatureEditWidget extends BaseWidget {
                 alertView.show();
             }
         });
+
+
     }
 
     /**

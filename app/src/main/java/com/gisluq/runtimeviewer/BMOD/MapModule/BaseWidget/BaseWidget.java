@@ -182,7 +182,7 @@ public abstract class BaseWidget {
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN,priority = 100)//设置优先级100
     public void onMoonEvent(BaseWidgetMsgEvent baseWidgetMsgEvent){
            if(baseWidgetMsgEvent.getMessage().equals(id+"-open")){
            //判断当前页面是否活动，如果活动不执行任何操作
