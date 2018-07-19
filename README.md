@@ -47,7 +47,7 @@ App配置文件
 -->
 <configuration>
     <!--Runtime 许可-->
-	    <runtimekey license="runtimestandard,101,rud406482271,none,KGC63PJS3MLFLMZ59141"/>
+	    <runtimekey license="许可信息"/>
 
     <!--系统工作空间目录-->
     <workspace path="/RuntimeViewer"/>
