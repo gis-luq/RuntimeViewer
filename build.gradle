@@ -28,7 +28,7 @@ subprojects{
     afterEvaluate {project ->
         if(project.hasProperty("dependencies")){
             dependencies {
-                implementation "com.esri.arcgisruntime:arcgis-android:100.2.1"
+                implementation "com.esri.arcgisruntime:arcgis-android:100.3.0"
             }
         }
     }

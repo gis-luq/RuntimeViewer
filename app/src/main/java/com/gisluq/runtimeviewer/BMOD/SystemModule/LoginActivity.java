@@ -176,7 +176,7 @@ public class LoginActivity extends BaseActivity implements LockPatternView.OnPat
         String SysConf = SystemDirPath.getLockViewConfPath(context);
         boolean isHave = FileUtils.isExist(SysConf);
         if (isHave) {
-            String lockviewMd = FileUtils.openTxt(SysConf);
+            String lockviewMd = FileUtils.openTxt(SysConf,"GB2312");
             if (lockviewMd==null){
                 return;
             }

@@ -99,7 +99,7 @@ public class LockviewActivity extends BaseActivity implements LockPatternView.On
         String lockView = LockPatternView.patternToString(pattern);
         if (tagIndex==0){
             String SysConf = SystemDirPath.getLockViewConfPath(context);
-            String Md = FileUtils.openTxt(SysConf);
+            String Md = FileUtils.openTxt(SysConf,"GB2312");
             if(Md.equals(lockView)){
                 Toast.makeText(context, "解锁验证通过", Toast.LENGTH_SHORT).show();
                 this.titleTxt.setText(txtTag1);

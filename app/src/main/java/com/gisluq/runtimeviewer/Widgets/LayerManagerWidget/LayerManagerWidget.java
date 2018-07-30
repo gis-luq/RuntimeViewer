@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.esri.arcgisruntime.data.FeatureCollection;
+import com.esri.arcgisruntime.data.FeatureCollectionTable;
 import com.esri.arcgisruntime.data.ShapefileFeatureTable;
 import com.esri.arcgisruntime.data.TileCache;
 import com.esri.arcgisruntime.data.VectorTileCache;
@@ -71,6 +73,8 @@ public class LayerManagerWidget extends BaseWidget {
         initOperationalLayers();//初始化业务图层
 
         initGeoPackageLayers();//初始化业务图层 gpkg
+
+        initJsonLayers();//初始化json图层
 
         initWidgetView();//初始化UI
 
@@ -275,6 +279,35 @@ public class LayerManagerWidget extends BaseWidget {
     }
 
     /**
+     * 初始化接送
+     */
+    private void initJsonLayers(){
+        String path = getJSONPath();
+        List<FileUtils.FileInfo> fileInfos = FileUtils.getFileListInfo(path,".json");
+        if (fileInfos==null) return;
+        for (int i = 0; i < fileInfos.size(); i++) {
+            FileUtils.FileInfo fileInfo = fileInfos.get(i);
+            String json = FileUtils.openTxt(fileInfo.FilePath,"UTF-8");
+            final FeatureCollection featureCollection = FeatureCollection.fromJson(json);
+            featureCollection.loadAsync();
+            featureCollection.addDoneLoadingListener(new Runnable() {
+                @Override
+                public void run() {
+                   List<FeatureCollectionTable> featureCollectionTable = featureCollection.getTables();
+                    for (int j = 0; j < featureCollectionTable.size(); j++) {
+                        FeatureCollectionTable features = featureCollectionTable.get(j);
+                        FeatureLayer featureLayer = new FeatureLayer(features);
+                        featureLayer.setName(features.getTableName()+"-json");
+                        mapView.getMap().getOperationalLayers().add(featureLayer);
+                    }
+                }
+            });
+
+        }
+
+    }
+
+    /**
      * 初始化基础底图资源
      */
     private void initBaseMapResource() {
@@ -385,6 +418,14 @@ public class LayerManagerWidget extends BaseWidget {
      */
     private String getGeoPackagePath(){
         return projectPath+ File.separator+"GeoPackage"+File.separator;
+    }
+
+    /**
+     * 获取json路径信息
+     * @return
+     */
+    private String getJSONPath(){
+        return projectPath+ File.separator+"JSON"+File.separator;
     }
 
 }

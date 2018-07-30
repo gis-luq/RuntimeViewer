@@ -208,9 +208,10 @@ public class FileUtils {
     /**
      * 获取TXT文件内容
      * @param filePath 文件路径+名称
+     * @param type  字符编码类型 GB2312，UTF-8
      * @return TXT文件中的内容 String
      */
-    public static String openTxt(String filePath)
+    public static String openTxt(String filePath,String type)
     {
         File file = new File(filePath);
         String result = "";
@@ -236,7 +237,7 @@ public class FileUtils {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             outputStream.write(Buffer, 0, len);
             //把字节输出流转String
-            result =  new String(outputStream.toByteArray(),"GB2312");
+            result =  new String(outputStream.toByteArray(),type);
         } catch (Exception e) {
             // TODO: handle exception
             Log.e(TAG,"文件读取失败"+e.toString());

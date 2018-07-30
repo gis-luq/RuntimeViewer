@@ -57,7 +57,7 @@ public class BaseMapManager {
      */
     private JSONArray loadBaseMapConfig(String path){
         JSONArray jsonArrBaseLayers =null;
-        String JSON = FileUtils.openTxt(path);
+        String JSON = FileUtils.openTxt(path,"GB2312");
         try {
             JSONObject jsonObject = new JSONObject(JSON);
             jsonArrBaseLayers = jsonObject.getJSONArray("baselayers");

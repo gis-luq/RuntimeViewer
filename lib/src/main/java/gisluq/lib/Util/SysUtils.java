@@ -1,5 +1,6 @@
 package gisluq.lib.Util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
@@ -28,9 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
 
-import static com.esri.arcgisruntime.internal.jni.av.dm;
-import static com.esri.arcgisruntime.internal.jni.av.el;
-
 /**
  * 系统硬件参数获取类
  * Created by lq on 2015/3/13.
@@ -45,8 +43,8 @@ public class SysUtils {
     {
         final ConnectivityManager connMgr =
                 (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        final android.net.NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        final android.net.NetworkInfo mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        @SuppressLint("MissingPermission") final android.net.NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        @SuppressLint("MissingPermission") final android.net.NetworkInfo mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         if (wifi.isConnected() || mobile.isConnected())
             return true;
         else

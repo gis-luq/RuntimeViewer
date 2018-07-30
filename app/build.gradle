@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.gisluq.runtimeviewer"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "v-0.1"

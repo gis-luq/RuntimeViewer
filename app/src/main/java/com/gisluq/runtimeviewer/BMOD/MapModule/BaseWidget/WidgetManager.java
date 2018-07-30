@@ -26,6 +26,8 @@ import gisluq.lib.Util.ToastUtils;
 
 public class WidgetManager {
 
+    private String TAG="WidgetManager";
+
     private Context context;
     private ResourceConfig resourceConfig;
     private MapManager mMapManager;
@@ -72,6 +74,7 @@ public class WidgetManager {
                 widget.create();
                 mInstanceWidget.put(mListWidget.get(i).getId(), widget);
             } catch (Exception e) {
+                Log.e(TAG,e.getMessage());
                 e.printStackTrace();
                 ToastUtils.showShort(context,mListWidget.get(i).getLabel()+"组件加载失败:"+e.getMessage());
             }
