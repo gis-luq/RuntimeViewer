@@ -3,6 +3,7 @@ package com.gisluq.runtimeviewer.BMOD.MapModule.BaseWidget;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+import android.view.ViewParent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
@@ -45,6 +46,9 @@ public class BaseWidgetControl {
     /**内容区域*/
     public RelativeLayout baseWigetViewContext;
 
+    /**组件扩展区域*/
+    public RelativeLayout baseWidgetExtentView;
+
     private BaseWidget widget;//组件信息
 
     public BaseWidgetControl(Context context){
@@ -60,15 +64,24 @@ public class BaseWidgetControl {
 
     /**
      * 显示组件视图
+     * @param v
      */
-    public void startBaseWiget(){
-        widget.active();//打开组件时执行active方法用于装载UI信息
+    public void startBaseWiget(View v){
+
+        ViewParent viewParent = v.getParent();
+        if (viewParent!=null){
+            RelativeLayout vp = (RelativeLayout) viewParent;
+            vp.removeAllViews();
+        }
+
+        this.baseWigetViewContext.removeAllViews();
+        this.baseWigetViewContext.addView(v);
 
         baseWigetView.setVisibility(View.VISIBLE);//Widget主框架-显示
         wigetView.setVisibility(View.VISIBLE);//Widget视图-显示
         btnOpenWidget.setVisibility(View.GONE);//打开按钮-默认不显示
 
-//        animOpen();
+        animOpen();
     }
 
 
@@ -84,8 +97,8 @@ public class BaseWidgetControl {
         btnRemoveWidget = (Button) baseWigetView.findViewById(R.id.base_widget_view_btnRemove);
         btnOpenWidget = (Button) baseWigetView.findViewById(R.id.base_widget_view_btnOpen);
         btnClosedWidget = (Button) baseWigetView.findViewById(R.id.base_widget_view_btnClosed);
-        baseWigetViewContext =(RelativeLayout) baseWigetView.findViewById(R.id.base_widget_view_ContextView);
-
+        baseWigetViewContext = (RelativeLayout) baseWigetView.findViewById(R.id.base_widget_view_ContextView);
+        baseWidgetExtentView = (RelativeLayout) baseWigetView.findViewById(R.id.base_widget_view_widgetExtendview);
 
         btnOpenWidget.setVisibility(View.GONE);//默认不显示
 
@@ -130,6 +143,8 @@ public class BaseWidgetControl {
      */
     public void setWidget(BaseWidget widget) {
         this.widget = widget;
+        this.widget.setWidgetExtentView(baseWidgetExtentView);
+        this.widget.active();//打开组件时执行active方法用于装载UI信息
     }
 
     /**
@@ -146,7 +161,7 @@ public class BaseWidgetControl {
      * 打开动画
      */
     private void animOpen() {
-//        Animation animationOpen = AnimationUtils.loadAnimation(context, R.anim.widget_enter_left);
+//        Animation animationOpen = AnimationUtils.loadAnimation(context,R.anim.widget_enter_left);
 //        baseWigetView.startAnimation(animationOpen);
     }
 
@@ -154,7 +169,7 @@ public class BaseWidgetControl {
      * 关闭动画
      */
     private void animClosed() {
-//        Animation animationExit = AnimationUtils.loadAnimation(context, R.anim.widget_exit_left);
+//        Animation animationExit = AnimationUtils.loadAnimation(context, tech.esricd.unspacecollector.R.anim.widget_exit_left);
 //        baseWigetView.startAnimation(animationExit);
     }
 

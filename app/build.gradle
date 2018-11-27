@@ -6,10 +6,10 @@ android {
 
     defaultConfig {
         applicationId "com.gisluq.runtimeviewer"
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 27
         versionCode 1
-        versionName "v-0.1"
+        versionName "v-0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 //        ndk {
 //            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"

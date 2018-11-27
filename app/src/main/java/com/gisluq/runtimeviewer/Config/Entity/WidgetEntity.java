@@ -22,6 +22,7 @@ public class WidgetEntity
 	private String mLabel = "";
 	private String mGroup = "";
 	private String mIcon = "";
+	private String mSelectIcon = "";
 	private String mConfig = "";
 	private boolean isShowing = false;
 
@@ -62,6 +63,15 @@ public class WidgetEntity
 	{
 		return mConfig;
 	}
+
+	public void setSelectIconName(String mSelectIcon) {
+		this.mSelectIcon = mSelectIcon;
+	}
+
+	public String getSelectIcon() {
+		return mSelectIcon;
+	}
+
 	public void setIconName(String icon)
 	{
 		mIcon = icon;

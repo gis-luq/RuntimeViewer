@@ -11,11 +11,16 @@ App配置文件
 
     <!--widget组件列表-->
     <widgetcontainer>
-        <widget label="图层管理" classname="com.gisluq.runtimeviewer.Widgets.LayerManagerWidget.LayerManagerWidget" icon="widget_ico_layer_manager.png" config=""/>
-        <widget label="要素查询" classname="com.gisluq.runtimeviewer.Widgets.QueryWidget.QueryWidget" icon="widget_ico_query.png" config=""/>
-        <widget label="要素编辑" classname="com.gisluq.runtimeviewer.Widgets.FeatureEditWidget.FeatureEditWidget" icon="widget_ico_feature_edit.png" config=""/>
-        <widget label="测距量算" classname="com.gisluq.runtimeviewer.Widgets.CalculateWidget.CaculateWidget"  icon="widget_ico_caculate.png"  config=""/>
-        <widget label="测试" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" config=""/>
-        <widget label="测试" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" config=""/>
+        <widget label="图层管理" classname="com.gisluq.runtimeviewer.Widgets.LayerManagerWidget.LayerManagerWidget" 
+	             icon="widget_layermanager.png" select_icon="widget_layermanager_select2.png"/>
+        <!--<widget label="要素查询" classname="com.gisluq.runtimeviewer.Widgets.QueryWidget.QueryWidget" -->
+	            <!--icon="widget_query.png" select_icon="widget_query_select2.png"/>-->
+        <!--<widget label="要素编辑" classname="com.gisluq.runtimeviewer.Widgets.FeatureEditWidget.FeatureEditWidget" -->
+                <!--icon="widget_featureedit.png" select_icon="widget_featureedit_select2.png"/>-->
+        <!--<widget label="测距量算" classname="com.gisluq.runtimeviewer.Widgets.CalculateWidget.CaculateWidget"  -->
+	            <!--icon="widget_caculate.png" select_icon="widget_caculate_select2.png"/>-->
+	
+        <widget label="测试" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" />
+        <widget label="测试" classname="com.gisluq.runtimeviewer.Widgets.HelloWorldWidget" />
     </widgetcontainer>
 </configuration>

@@ -70,9 +70,12 @@ public class MapManager {
         resourceConfig.mapView.setMagnifierEnabled(false);
         resourceConfig.mapView.setCanMagnifierPanMap(false);
 
-        /**最大最小比例尺设置*/
-        resourceConfig.mapView.getMap().setMinScale(999999999);//最小比例尺
-        resourceConfig.mapView.getMap().setMaxScale(1500);//最大比例尺
+//        /**最大最小比例尺设置*/
+//        resourceConfig.mapView.getMap().setMinScale(999999999);//最小比例尺
+//        resourceConfig.mapView.getMap().setMaxScale(1500);//最大比例尺
+
+        /***不显示Esri LOGO*/
+        resourceConfig.mapView.setAttributionTextVisible(false);
 
         /**旋转*/
         final Compass mCompass = new Compass(context, null, resourceConfig.mapView);

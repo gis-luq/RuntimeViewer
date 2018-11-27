@@ -1,5 +1,6 @@
 package com.gisluq.runtimeviewer.BMOD.MapModule.View;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,6 +22,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.esri.arcgisruntime.data.Feature;
+import com.esri.arcgisruntime.layers.FeatureLayer;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import com.gisluq.runtimeviewer.BMOD.MapModule.BaseWidget.BaseWidget;
 import com.gisluq.runtimeviewer.BMOD.MapModule.BaseWidget.WidgetManager;
 import com.gisluq.runtimeviewer.Config.AppConfig;
@@ -33,6 +40,8 @@ import com.gisluq.runtimeviewer.R;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -138,107 +147,108 @@ public class MapActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
-        /***
-         * 方案二模式，平板左侧菜单，手机底部菜单
-         */
-        //根据配置文件初始化系统功能菜单栏
-        if (mConfigEntity != null) {
-            final List<WidgetEntity> mListWidget = mConfigEntity.getListWidget();
+        boolean isPad = SysUtils.isPad(context);
+        if (isPad){
+            /***
+             * 方案二模式，平板左侧菜单
+             */
+            //根据配置文件初始化系统功能菜单栏
+            if (mConfigEntity != null) {
+                final List<WidgetEntity> mListWidget = mConfigEntity.getListWidget();
 
-            for (int i = 0; i < mListWidget.size(); i++) {
-                final WidgetEntity widgetEntity = mListWidget.get(i);
+                for (int i = 0; i < mListWidget.size(); i++) {
+                    final WidgetEntity widgetEntity = mListWidget.get(i);
 
-                View view = LayoutInflater.from(context).inflate(R.layout.base_widget_view_tools_widget_btn, null);
-                final LinearLayout ltbtn = view.findViewById(R.id.base_widget_view_tools_widget_btn_lnbtnWidget);
-                TextView textViewName = (TextView) view.findViewById(R.id.base_widget_view_tools_widget_btn_txtWidgetToolName);
-                ImageView imageView = (ImageView)view.findViewById(R.id.base_widget_view_tools_widget_btn_imgWidgetToolIcon);
-                ltbtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int id = widgetEntity.getId();
-                        BaseWidget widget = mWidgetManager.getSelectWidget();//当前选中
-                        if (widget!=null){
-                             //当前有选中的widget
-                            if (id == widget.id){
-                                //判断当前是否显示状态
-                                if (mWidgetManager.getSelectWidget().isActiveView()){
-                                    mWidgetManager.startWidgetByID(id);//显示widget
+                    //widget按钮初始化操作
+                    View view = LayoutInflater.from(context).inflate(R.layout.base_widget_view_tools_widget_btn, null);
+                    final LinearLayout ltbtn = view.findViewById(R.id.base_widget_view_tools_widget_btn_lnbtnWidget);
+                    TextView textViewName = (TextView) view.findViewById(R.id.base_widget_view_tools_widget_btn_txtWidgetToolName);
+                    ImageView imageView = (ImageView)view.findViewById(R.id.base_widget_view_tools_widget_btn_imgWidgetToolIcon);
+                    //设置按钮对应UI
+                    mWidgetManager.setWidgetBtnView(widgetEntity.getId(),textViewName,imageView);
+
+                    ltbtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            int id = widgetEntity.getId();
+                            BaseWidget widget = mWidgetManager.getSelectWidget();//当前选中
+                            if (widget!=null){
+                                //当前有选中的widget
+                                if (id == widget.id){
+                                    //判断当前是否显示状态
+                                    if (mWidgetManager.getSelectWidget().isActiveView()){
+                                        mWidgetManager.startWidgetByID(id);//显示widget
+                                    }else {
+                                        mWidgetManager.hideSelectWidget();
+                                    }
+
                                 }else {
-                                    mWidgetManager.hideSelectWidget();
+                                    mWidgetManager.startWidgetByID(id);//显示widget
                                 }
-
                             }else {
+                                //当前未选中widget
                                 mWidgetManager.startWidgetByID(id);//显示widget
                             }
-                        }else {
-                            //当前未选中widget
-                            mWidgetManager.startWidgetByID(id);//显示widget
+
                         }
+                    });
+                    textViewName.setText(widgetEntity.getLabel());
 
+                    try {
+                        String name = widgetEntity.getIconName();
+                        if (name!=null){
+                            InputStream is = getAssets().open(name);
+                            Bitmap bitmap = BitmapFactory.decodeStream(is);
+                            imageView.setImageBitmap(bitmap);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                });
-                textViewName.setText(widgetEntity.getLabel());
 
-                try {
-                    String name = widgetEntity.getIconName();
-                    if (name!=null){
-                        InputStream is = getAssets().open(name);
-                        Bitmap bitmap = BitmapFactory.decodeStream(is);
-                        imageView.setImageBitmap(bitmap);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    resourceConfig.baseWidgetToolsView.addView(view);
+
                 }
-
-                resourceConfig.baseWidgetToolsView.addView(view);
-
             }
-        }
+        }else {
+            /***
+             * 方案一模式，采用右侧顶部显示菜单--手机模式
+             */
+            //根据配置文件初始化系统功能菜单栏
+            if (mConfigEntity != null) {
+                List<WidgetEntity> mListWidget = mConfigEntity.getListWidget();
 
-//        boolean isPad = SysUtils.isPad(context);
-//        if (isPad){
-//
-//        }else {
-//            /***
-//             * 方案一模式，采用右侧顶部显示菜单
-//             */
-//            //根据配置文件初始化系统功能菜单栏
-//            if (mConfigEntity != null) {
-//                List<WidgetEntity> mListWidget = mConfigEntity.getListWidget();
-//
-//                String widgetGroup = "";
-//                List<WidgetEntity> mGroupListWidget = new ArrayList<>();
-//
-//                for (int i = 0; i < mListWidget.size(); i++) {
-//                    WidgetEntity widgetEntity = mListWidget.get(i);
-//
-//                    if(widgetEntity.getGroup()==""){
-//                        MenuItem menuItem= menu.add(Menu.NONE, Menu.FIRST + i, 0, widgetEntity.getLabel());
-//                        //记录菜单ID和WidgetEntity间对应关系
-//                        mWidgetEntityMenu.put(menuItem.getItemId(),widgetEntity);
-//                        if (widgetEntity.getIsShowing()) {
-//                            menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);//显示到状态栏
-//                        }
-//                    }else {
-//                        if (widgetGroup == "") {
-//                            widgetGroup = widgetEntity.getGroup();//设置组名称
-//                            //获取组名
-//                            MenuItem menuItem = menu.add(Menu.NONE, Menu.FIRST + i, 0, widgetGroup);
-//                            menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);//显示到状态栏
-//                            //记录菜单ID和WidgetEntity间对应关系
-//                            mWidgetEntityMenu.put(menuItem.getItemId(),mGroupListWidget);
-//                        }
-//                        if (widgetEntity.getGroup().equals(widgetGroup)) {//同一个组
-//                            mGroupListWidget.add(widgetEntity);//记录widget组信息
-//                        } else {
-//                            //不同组
-//                        }
-//                    }
-//
-//                }
-//            }
-//
-//        }
+                String widgetGroup = "";
+                List<WidgetEntity> mGroupListWidget = new ArrayList<>();
+
+                for (int i = 0; i < mListWidget.size(); i++) {
+                    WidgetEntity widgetEntity = mListWidget.get(i);
+                    if(widgetEntity.getGroup()==""){
+                        MenuItem menuItem= menu.add(Menu.NONE, Menu.FIRST + i, 0, widgetEntity.getLabel());
+                        //记录菜单ID和WidgetEntity间对应关系
+                        mWidgetEntityMenu.put(menuItem.getItemId(),widgetEntity);
+                        if (widgetEntity.getIsShowing()) {
+                            menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);//显示到状态栏
+                        }
+                    }else {
+                        if (widgetGroup == "") {
+                            widgetGroup = widgetEntity.getGroup();//设置组名称
+                            //获取组名
+                            MenuItem menuItem = menu.add(Menu.NONE, Menu.FIRST + i, 0, widgetGroup);
+                            menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);//显示到状态栏
+                            //记录菜单ID和WidgetEntity间对应关系
+                            mWidgetEntityMenu.put(menuItem.getItemId(),mGroupListWidget);
+                        }
+                        if (widgetEntity.getGroup().equals(widgetGroup)) {//同一个组
+                            mGroupListWidget.add(widgetEntity);//记录widget组信息
+                        } else {
+                            //不同组
+                        }
+                    }
+
+                }
+            }
+
+        }
         return true;
     }
 
@@ -249,6 +259,14 @@ public class MapActivity extends BaseActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==android.R.id.home) {
+            exitActivity();
+            //如果这里不加上该句代码，一点击到后退键该界面就消失了，选择框就一闪掉了，选择不了
+            return true;
+        }
+
+
+
         super.onOptionsItemSelected(item);
         Object object =  mWidgetEntityMenu.get(item.getItemId());
         if (object!=null){
@@ -292,9 +310,32 @@ public class MapActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            //截屏保存
+            exitActivity();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 退出系统
+     */
+    private void exitActivity() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("是否退出当前工程？");
+        builder.setTitle("系统提示");
+        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setNegativeButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ((Activity)context).finish();
+            }
+        });
+        builder.create().show();
+
     }
 
     @Override
@@ -302,6 +343,12 @@ public class MapActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+		//预留处理拍照后回调问题
+        //EventBus.getDefault().post(new MessageEvent("camera-"+requestCode,0));
+    }
 
 
 }

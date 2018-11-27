@@ -3,44 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
-    android:orientation="vertical">
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="wrap_content"
-        android:layout_height="1px"
-        android:layout_weight="1"
-        android:alpha="0.9"
-        android:background="@color/grey" />
+    android:clickable="true">
 
     <LinearLayout
         android:id="@+id/base_widget_view_tools_widget_btn_lnbtnWidget"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="@drawable/ic_widget_item_touch"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="5dp">
 
         <ImageView
             android:id="@+id/base_widget_view_tools_widget_btn_imgWidgetToolIcon"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            android:padding="2dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             app:srcCompat="@mipmap/widget_default_tools2" />
 
         <TextView
             android:id="@+id/base_widget_view_tools_widget_btn_txtWidgetToolName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:singleLine="true"
             android:text="地图"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
     </LinearLayout>
 
 </LinearLayout>

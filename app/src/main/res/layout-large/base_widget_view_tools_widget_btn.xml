@@ -28,7 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="地图"
-            android:textSize="12sp" />
+            android:textColor="@color/deep_gray"
+            android:textSize="12sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

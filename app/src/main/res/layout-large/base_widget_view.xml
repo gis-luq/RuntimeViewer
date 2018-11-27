@@ -52,7 +52,8 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
                         android:text="组件"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/base_widget_view_btnRemove"
@@ -85,7 +86,6 @@
                 android:id="@+id/view3"
                 android:layout_width="0.5dp"
                 android:layout_height="wrap_content"
-                android:alpha="0.6"
                 android:background="@color/grey" />
 
         </LinearLayout>
@@ -98,5 +98,12 @@
         android:layout_height="30dp"
         android:layout_margin="5dp"
         android:background="@drawable/ic_widget_open_btn" />
+
+    <RelativeLayout
+        android:id="@+id/base_widget_view_widgetExtendview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
 
 </LinearLayout>

@@ -45,6 +45,7 @@ public class XmlParser {
 	private final static String XML_NODE_WIDGET_ATTRIBUTE_LABEL = "label";
 	private final static String XML_NODE_WIDGET_ATTRIBUTE_GROUP = "group";
 	private final static String XML_NODE_WIDGET_ATTRIBUTE_ICON = "icon";
+	private final static String XML_NODE_WIDGET_ATTRIBUTE_SELECT_ICON = "select_icon";
 	private final static String XML_NODE_WIDGET_ATTRIBUTE_CONFIG = "config";
 	private final static String XML_NODE_WIDGET_ATTRIBUTE_ISSHOWING = "showing";
 	private final static String XML_NODE_WIDGET_ATTRIBUTE_CLASSNAME = "classname";
@@ -57,11 +58,9 @@ public class XmlParser {
 		InputStream input;
 		int widgetid = 10000;//组件ID，从10000开始计数
 
-		try
-		{
+		try {
 			input = c.getResources().getAssets().open(Constant.CONFIG_FILE);
-		}
-		catch(Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 			return null;
 		}
@@ -105,6 +104,7 @@ public class XmlParser {
 							entity.setLabel(pullParser.getAttributeValue(null,XML_NODE_WIDGET_ATTRIBUTE_LABEL));
 							entity.setClassname(pullParser.getAttributeValue(null,XML_NODE_WIDGET_ATTRIBUTE_CLASSNAME));
 							entity.setIconName(pullParser.getAttributeValue(null,XML_NODE_WIDGET_ATTRIBUTE_ICON));
+							entity.setSelectIconName(pullParser.getAttributeValue(null,XML_NODE_WIDGET_ATTRIBUTE_SELECT_ICON));
 							entity.setStatus(Boolean.valueOf(pullParser.getAttributeValue(null,XML_NODE_WIDGET_ATTRIBUTE_ISSHOWING)));
 							if(pullParser.getAttributeValue(null,XML_NODE_WIDGET_ATTRIBUTE_CONFIG) != null)
 							{
@@ -127,9 +127,7 @@ public class XmlParser {
 			}
 			config.setListWidget(mListWidget);
 			input.close();
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		return config;

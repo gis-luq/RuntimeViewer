@@ -3,6 +3,8 @@ package com.gisluq.runtimeviewer.BMOD.MapModule.BaseWidget;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.gisluq.runtimeviewer.Config.Entity.ConfigEntity;
 import com.gisluq.runtimeviewer.Config.Entity.WidgetEntity;
@@ -56,6 +58,13 @@ public class WidgetManager {
 
     }
 
+    /**
+     * 获取Widget列表
+     * @return
+     */
+    public Map<Integer, BaseWidget> getmInstanceWidget() {
+        return mInstanceWidget;
+    }
 
     /**
      * 实例化组件类
@@ -74,9 +83,8 @@ public class WidgetManager {
                 widget.create();
                 mInstanceWidget.put(mListWidget.get(i).getId(), widget);
             } catch (Exception e) {
-                Log.e(TAG,e.getMessage());
                 e.printStackTrace();
-                ToastUtils.showShort(context,mListWidget.get(i).getLabel()+"组件加载失败:"+e.getMessage());
+                ToastUtils.showLong(context,mListWidget.get(i).getLabel()+"组件加载失败:"+e.getMessage());
             }
         }
     }
@@ -88,14 +96,17 @@ public class WidgetManager {
      */
     private void instanceWidget(BaseWidget widget, WidgetEntity entity) {
         widget.context = context;
+        widget.entity = entity;
         widget.id = entity.getId();
         widget.mapView = resourceConfig.mapView;
         widget.imgCenterView = resourceConfig.imgCenterView;
+        widget.btnCollectPoint = resourceConfig.btnPointCollect;
         widget.viewerConfig = mConfigEntity;
         widget.name = entity.getLabel();
 
-        //默认imgCenterView不显示
+        //默认imgCenterView\CollectPoint不显示
         widget.imgCenterView.setVisibility(View.GONE);
+        widget.btnCollectPoint.setVisibility(View.GONE);
 
         widget.projectPath = this.projectPath;
 
@@ -134,31 +145,21 @@ public class WidgetManager {
         if (selectWidgetID!=widgetId){//判断是否是当前组件
             BaseWidget widget = mInstanceWidget.get(widgetId);
 
-            /**
-             * 需要严格按照以下顺序执行
-             * 1、setWidget()
-             * 2、startBaseWiget()
-             * 3、baseWigetViewContext.removeAllViews()
-             * 4、baseWigetViewContext.addView(v)
-             */
             if(widget!=null){
                 baseWidgetControl.setTitle(widget.name);
                 baseWidgetControl.setWidget(widget);
-                baseWidgetControl.startBaseWiget();
-
-                baseWidgetControl.baseWigetViewContext.removeAllViews();
                 View v = widget.getWidgetContextView();
                 if (v!=null){
-                    baseWidgetControl.baseWigetViewContext.addView(v);
+                    baseWidgetControl.startBaseWiget(v);
+                    selectWidgetID = widgetId;
                 }
-
-                selectWidgetID = widgetId;
             }else{
                 ToastUtils.showLong(context,"组件打开失败，请请检查配置信息是否正确");
             }
         }else {
+            BaseWidget widget = mInstanceWidget.get(selectWidgetID);
             //显示当前widget
-            baseWidgetControl.startBaseWiget();
+            baseWidgetControl.startBaseWiget(widget.getWidgetContextView());
         }
     }
 
@@ -182,4 +183,13 @@ public class WidgetManager {
         selectWidgetID=-1;
     }
 
+    /**
+     * 设置Widget按钮对应view控件
+     * @param id
+     * @param textView
+     * @param imageView
+     */
+    public void setWidgetBtnView(int id, TextView textView, ImageView imageView) {
+        mInstanceWidget.get(id).setWidgetBtnView(textView,imageView);
+    }
 }

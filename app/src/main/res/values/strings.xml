@@ -2,7 +2,7 @@
 
     <string name="app_name">RuntimeViewer</string>
     <string name="app_title_name_mian">通用应用程序框架</string>
-    <string name="app_title_name_subhead">基于ArcGIS Runtime SDK 100.2.1</string>
+    <string name="app_title_name_subhead">基于ArcGIS Runtime SDK 100.x</string>
     <string name="app_company">Copyright © gis-luq</string>
 
     <!--解锁信息-->
