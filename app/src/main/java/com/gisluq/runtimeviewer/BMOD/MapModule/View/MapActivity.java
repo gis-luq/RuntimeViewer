@@ -265,8 +265,6 @@ public class MapActivity extends BaseActivity {
             return true;
         }
 
-
-
         super.onOptionsItemSelected(item);
         Object object =  mWidgetEntityMenu.get(item.getItemId());
         if (object!=null){

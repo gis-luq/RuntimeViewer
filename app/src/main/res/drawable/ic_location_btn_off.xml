@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:drawable="@mipmap/navi_car_circle_grey_preview" />
-    <item android:state_pressed="true" android:drawable="@mipmap/navi_car_circle_preview" />
+    <item android:drawable="@mipmap/collect_point1" />
+    <item android:state_pressed="true" android:drawable="@mipmap/collect_point_btn" />
 </selector>

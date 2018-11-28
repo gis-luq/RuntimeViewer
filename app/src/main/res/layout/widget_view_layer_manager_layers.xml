@@ -48,7 +48,8 @@
             <ListView
                 android:id="@+id/widget_view_layer_manager_layers_featureLayerListview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:minHeight="200dp"/>
         </LinearLayout>
 
     </RelativeLayout>
@@ -96,7 +97,8 @@
             <ListView
                 android:id="@+id/widget_view_layer_manager_layers_basemapLayerListview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:minHeight="200dp"/>
         </LinearLayout>
 
     </RelativeLayout>

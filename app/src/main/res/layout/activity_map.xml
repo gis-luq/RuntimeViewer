@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_margin="5dp"
+                    android:layout_margin="7dp"
                     android:background="@drawable/ic_location_btn_off"
                     android:text="ToggleButton"
                     android:textOff=" "
