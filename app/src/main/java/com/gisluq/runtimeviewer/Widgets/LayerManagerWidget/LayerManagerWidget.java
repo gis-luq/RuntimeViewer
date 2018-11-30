@@ -35,6 +35,8 @@ import com.gisluq.runtimeviewer.Widgets.LayerManagerWidget.Adapter.LayerListview
 import com.gisluq.runtimeviewer.Widgets.LayerManagerWidget.Adapter.LegendListviewAdapter;
 import com.gisluq.runtimeviewer.Widgets.LayerManagerWidget.BaseMap.BaseMapManager;
 import com.gisluq.runtimeviewer.Widgets.LayerManagerWidget.BaseMap.BasemapLayerInfo;
+import com.gisluq.runtimeviewer.Widgets.LayerManagerWidget.UserLayers.TianDiTuLayer.TianDiTuLayer;
+import com.gisluq.runtimeviewer.Widgets.LayerManagerWidget.UserLayers.TianDiTuLayer.TianDiTuLayerInfo;
 
 import java.io.File;
 import java.util.List;
@@ -386,6 +388,39 @@ public class LayerManagerWidget extends BaseWidget {
                     arcGISVectorTiledLayer.setVisible(layerInfo.Visable);
                     arcGISVectorTiledLayer.setOpacity((float)layerInfo.Opacity);
                     super.mapView.getMap().getBasemap().getBaseLayers().add(arcGISVectorTiledLayer);
+                }else if(type.equals(BasemapLayerInfo.LYAER_TYPE_TIANDITU_MAP)) {//天地图
+                    TianDiTuLayerInfo tdtInfo = new TianDiTuLayerInfo();
+
+                    TianDiTuLayerInfo tdtInfo01 = tdtInfo.initwithlayerType(TianDiTuLayerInfo.TianDiTuLayerType.TDT_VECTOR,
+                            TianDiTuLayerInfo.TianDiTuSpatialReferenceType.TDT_2000);
+                    TianDiTuLayer ltl1 = new TianDiTuLayer(tdtInfo01.getTileInfo(), tdtInfo01.getFullExtent());
+                    ltl1.setName(layerInfo.Name);
+                    ltl1.setVisible(layerInfo.Visable);
+                    ltl1.setOpacity((float) layerInfo.Opacity);
+
+                    ltl1.setLayerInfo(tdtInfo01);
+                    super.mapView.getMap().getBasemap().getBaseLayers().add(ltl1);
+
+                }else if(type.equals(BasemapLayerInfo.LYAER_TYPE_TIANDITU_IMAGE)) {//天地图影像图
+                    TianDiTuLayerInfo tdtInfo = new TianDiTuLayerInfo();
+                    TianDiTuLayerInfo tdtInfo01 = tdtInfo.initwithlayerType(TianDiTuLayerInfo.TianDiTuLayerType.TDT_IMAGE,
+                            TianDiTuLayerInfo.TianDiTuSpatialReferenceType.TDT_2000);
+                    TianDiTuLayer ltl1 = new TianDiTuLayer(tdtInfo01.getTileInfo(), tdtInfo01.getFullExtent());
+                    ltl1.setName(layerInfo.Name);
+                    ltl1.setVisible(layerInfo.Visable);
+                    ltl1.setOpacity((float) layerInfo.Opacity);
+                    ltl1.setLayerInfo(tdtInfo01);
+                    super.mapView.getMap().getBasemap().getBaseLayers().add(ltl1);
+                }else if(type.equals(BasemapLayerInfo.LYAER_TYPE_TIANDITU_IMAGE_LABEL)) {//天地图影像标注图层
+                    TianDiTuLayerInfo tdtannoInfo = new TianDiTuLayerInfo();
+                    TianDiTuLayerInfo tdtannoInfo02 = tdtannoInfo.initwithlayerType(TianDiTuLayerInfo.TianDiTuLayerType.TDT_IMAGE,
+                            TianDiTuLayerInfo.TianDiTuLanguageType.TDT_CN, TianDiTuLayerInfo.TianDiTuSpatialReferenceType.TDT_2000);
+                    TianDiTuLayer ltl2 = new TianDiTuLayer(tdtannoInfo02.getTileInfo(), tdtannoInfo02.getFullExtent());
+                    ltl2.setName(layerInfo.Name);
+                    ltl2.setVisible(layerInfo.Visable);
+                    ltl2.setOpacity((float) layerInfo.Opacity);
+                    ltl2.setLayerInfo(tdtannoInfo02);
+                    super.mapView.getMap().getBasemap().getBaseLayers().add(ltl2);
                 }else{
                     Log.d(TAG,"vtpk文件不存在,"+path);
                     Toast.makeText(context, "vtpk文件不存在,"+path, Toast.LENGTH_LONG).show();

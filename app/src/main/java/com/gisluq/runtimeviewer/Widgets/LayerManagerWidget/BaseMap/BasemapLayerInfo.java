@@ -16,6 +16,10 @@ public class BasemapLayerInfo {
     public static String LYAER_TYPE_ONLINE_DYNAMICLAYER="OnlineDynamicMapServiceLayer";//在线动态图层
     public static String LYAER_TYPE_VTPK="LocalVectorTilePackage";//vtpk
 
+    public static String LYAER_TYPE_TIANDITU_MAP="TianDiDuLayerMap";//天地图底图
+    public static String LYAER_TYPE_TIANDITU_IMAGE="TianDiDuLayerImage";//天地图影像
+    public static String LYAER_TYPE_TIANDITU_IMAGE_LABEL="TianDiDuLayerImageLabel";//天地图影像标注图层
+
 
     public String Name;//名称
     public String Type;//类型
