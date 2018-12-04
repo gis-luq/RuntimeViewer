@@ -185,20 +185,24 @@ public abstract class BaseWidget {
             mapView.setOnTouchListener(mMapOnTouchListener);
         }
         isActiveView =false;
-        //设置图标样式
-        try {
-            String name = entity.getIconName();
-            if (name!=null){
-                InputStream is = context.getAssets().open(name);
-                Bitmap bitmap = BitmapFactory.decodeStream(is);
-                imgWidgetIcon.setImageBitmap(bitmap);
+        boolean isPad = SysUtils.isPad(context);
+        if (isPad){
+            //设置图标样式--仅平板
+            try {
+                String name = entity.getIconName();
+                if (name!=null){
+                    InputStream is = context.getAssets().open(name);
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+                    imgWidgetIcon.setImageBitmap(bitmap);
+                }
+                txtWidgetName.setTextColor(context.getColor(R.color.deep_gray));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            txtWidgetName.setTextColor(context.getColor(R.color.deep_gray));
-        } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("BaseWidget","inactive, id = "+ this.id);
         }
-        Log.d("BaseWidget","inactive, id = "+ this.id);
-    };
+
+    }
 
     /**
      * 获取当前widget是否处于显示状态
