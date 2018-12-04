@@ -30,6 +30,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
+import gisluq.lib.Util.SysUtils;
 import gisluq.lib.Util.ToastUtils;
 
 
@@ -154,23 +155,25 @@ public abstract class BaseWidget {
         mMapOnTouchListener = (MapView.OnTouchListener) mapView.getOnTouchListener();
         isActiveView =true;
 
-        //设置图标样式
-        try {
-            String name = entity.getSelectIcon();
-            if (name!=null){
-                InputStream is = context.getAssets().open(name);
-                Bitmap bitmap = BitmapFactory.decodeStream(is);
-                if (imgWidgetIcon!=null){
-                    imgWidgetIcon.setImageBitmap(bitmap);
+        boolean isPad = SysUtils.isPad(context);
+        if (isPad){
+            //设置图标样式(仅平板)
+            try {
+                String name = entity.getSelectIcon();
+                if (name!=null){
+                    InputStream is = context.getAssets().open(name);
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+                    if (imgWidgetIcon!=null){
+                        imgWidgetIcon.setImageBitmap(bitmap);
+                    }
                 }
+                if (txtWidgetName!=null){
+                    txtWidgetName.setTextColor(context.getColor(R.color.colorPrimaryDark));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            if (txtWidgetName!=null){
-                txtWidgetName.setTextColor(context.getColor(R.color.colorPrimaryDark));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
     }
 
     /**

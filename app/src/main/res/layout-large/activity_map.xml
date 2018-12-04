@@ -140,7 +140,6 @@
                 android:layout_marginTop="60dp"
                 android:alpha="0.9"
                 android:clickable="true"
-                android:visibility="gone"
                 app:srcCompat="@mipmap/collect_point" />
 
             <ImageView
@@ -149,7 +148,6 @@
                 android:layout_height="60dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:visibility="gone"
                 app:srcCompat="@mipmap/map_cross_2" />
         </RelativeLayout>
 

@@ -29,6 +29,9 @@ public class HelloWorldWidget extends BaseWidget {
 
         super.mapView.getMap().getBasemap().getBaseLayers();
         super.mapView.getMap().getOperationalLayers();
+
+        super.showCenterView();
+        super.showCollectPointBtn();
     }
 
     /**
@@ -50,6 +53,8 @@ public class HelloWorldWidget extends BaseWidget {
     @Override
     public void inactive(){
         super.inactive();
+        super.hideCenterView();
+        super.hideCollectPointBtn();
     }
 
 }
