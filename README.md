@@ -168,10 +168,12 @@ assents/config.xml下添加以下内容：
 ```
 ![ ](./readme/widget-xml.png '描述')
 
-widget整体效果
+#### widget整体效果
+##### 平板模式下Widget效果
 ![ ](./readme/03-pad-helloworld.png '平板模式')
-![ ](./readme/06-app-helloworld.png '手机模式')
 
+##### 手机模式下Widget效果
+<div align=center><img width="400" src="./readme/06-app-helloworld.png"/></div>
 
 ### widget操作Mapview对象
 每一个widget扩展了父类BaseWidget。使用以下方法就可以获取并操作mapview对象中的内容。
