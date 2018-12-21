@@ -169,7 +169,7 @@ public class BaseWidgetControl {
      * 关闭动画
      */
     private void animClosed() {
-//        Animation animationExit = AnimationUtils.loadAnimation(context, tech.esricd.unspacecollector.R.anim.widget_exit_left);
+//        Animation animationExit = AnimationUtils.loadAnimation(context, R.anim.widget_exit_left);
 //        baseWigetView.startAnimation(animationExit);
     }
 

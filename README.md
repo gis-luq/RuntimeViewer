@@ -4,10 +4,12 @@
 组件式开发框架，兼容手机、平板多种设备。
 
 #### 平板模式
-![ ](./readme/20180328105237.png '平板模式')
+![ ](./readme/01-pad.png '平板模式')
+![ ](./readme/02-pad-mian.png '平板模式')
 
 #### 手机模式
-<div align=center><img width="400" src="./readme/20180330235309.png"/></div>
+<div align=center><img width="400" src="./readme/04-app.png"/></div>
+<div align=center><img width="400" src="./readme/05-app-main.png"/></div>
 
 如何快速运行应用程序？
 ===========
@@ -167,7 +169,9 @@ assents/config.xml下添加以下内容：
 ![ ](./readme/widget-xml.png '描述')
 
 widget整体效果
-![ ](./readme/20180328105251.png '描述')
+![ ](./readme/03-pad-helloworld.png '平板模式')
+![ ](./readme/06-app-helloworld.png '手机模式')
+
 
 ### widget操作Mapview对象
 每一个widget扩展了父类BaseWidget。使用以下方法就可以获取并操作mapview对象中的内容。
